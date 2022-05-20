@@ -1,9 +1,5 @@
 // ignore_for_file: avoid_print, non_constant_identifier_names
 
-import 'dart:io';
-
-import 'package:http/http.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:memoire/utils/constant.dart';
 import 'package:memoire/widgets/input.dart';
 
@@ -26,6 +22,7 @@ class Offer {
   int? visitors;
   int? bathroom;
   int? views_nm;
+  int? agency_id;
   double? latitude;
   double? longitude;
   String? image;
@@ -33,27 +30,27 @@ class Offer {
   bool? selfLiked;
   User? user;
 
-  Offer({
-    this.id,
-    this.price,
-    this.name,
-    this.image,
-    this.location,
-    this.selfLiked,
-    this.user,
-    this.bathroom,
-    this.bed,
-    this.date_end,
-    this.date_start,
-    this.description,
-    this.latitude,
-    this.longitude,
-    this.logement_type,
-    this.rooms,
-    this.trading_type,
-    this.visitors,
-    this.views_nm,
-  });
+  Offer(
+      {this.id,
+      this.price,
+      this.name,
+      this.image,
+      this.location,
+      this.selfLiked,
+      this.user,
+      this.bathroom,
+      this.bed,
+      this.date_end,
+      this.date_start,
+      this.description,
+      this.latitude,
+      this.longitude,
+      this.logement_type,
+      this.rooms,
+      this.trading_type,
+      this.visitors,
+      this.views_nm,
+      this.agency_id});
 
 // map json to post model
 
@@ -75,6 +72,7 @@ class Offer {
         date_start: json['date_start'],
         price: json['price'],
         image: json['image'],
+        agency_id: json['agency_id'],
         location: json['location'],
         selfLiked: json['likes'].length > 0,
         user: User(
@@ -218,15 +216,13 @@ Future<ApiResponse> editOffer(int id, String body) async {
   ApiResponse apiResponse = ApiResponse();
   try {
     String token = await getToken();
-    final response = await http.patch(
-        Uri.parse('http://192.168.230.38:8000/api/user/$id'),
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Bearer $token'
-        },
-        body: {
-          'body': body
-        });
+    final response = await http
+        .patch(Uri.parse('http://192.168.230.38:8000/api/user/$id'), headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token'
+    }, body: {
+      'body': body
+    });
 
     switch (response.statusCode) {
       case 200:
@@ -248,14 +244,15 @@ Future<ApiResponse> editOffer(int id, String body) async {
   return apiResponse;
 }
 
-
 updateData(data) async {
   String token = await getToken();
-  return await http.post(Uri.parse('http://192.168.230.38:8000/api/offer'), body: jsonEncode(data), headers: {
-    'Content-type': 'application/json',
-    'Accept': 'application/json',
-    'Authorization': 'Bearer $token'
-  });
+  return await http.post(Uri.parse('http://192.168.230.38:8000/api/offer'),
+      body: jsonEncode(data),
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      });
 }
 
 // Delete offer
@@ -479,6 +476,36 @@ Future<ApiResponse> getAgencyOffers() async {
     case 200:
       apiResponse.data = jsonDecode(response.body);
       print(200);
+      break;
+    case 401:
+      apiResponse.error = unauthorized;
+      break;
+    default:
+      apiResponse.error = somethingWentWrong;
+      break;
+  }
+
+  return apiResponse;
+}
+
+//get Agency number
+Future<ApiResponse> num(id) async {
+  ApiResponse apiResponse = ApiResponse();
+
+  String token = await getToken();
+
+  final response = await http.get(
+      Uri.parse('http://192.168.230.38:8000/api/agencyPhone/$id'),
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      });
+
+  switch (response.statusCode) {
+    case 200:
+      apiResponse.data = jsonDecode(response.body);
+      apiResponse.data as List;
+      print(apiResponse.data);
       break;
     case 401:
       apiResponse.error = unauthorized;
