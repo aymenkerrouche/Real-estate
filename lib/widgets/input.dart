@@ -454,7 +454,6 @@ class _ImagesState extends State<Images> {
       if (selectedImages!.isNotEmpty) {
         Images.listImage.addAll(selectedImages);
       }
-      print('les images sont '+ Images.listImage.length.toString()); 
       for (var i = 0; i < Images.listImage.length; i++) {
         Images.listPath.add(Images.listImage[i].path);
         print(Images.listImage[i].path);

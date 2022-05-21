@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, duplicate_ignore, unused_local_variable, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:memoire/Services/Api.dart';
 import 'package:memoire/screens/login/login.dart';
 import 'sign_up.dart';
@@ -16,14 +17,14 @@ class XDLanding extends StatelessWidget {
       body: Stack(
         children: [
           Positioned(
-            top: tol / 1.71,
+            top: size.height * 0.175,
             width: size.width,
             child: Text(
               'REAL ESTATE AGENCY',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Quicksand',
-                fontSize: size.height/30,
+                fontSize: size.height / 30,
                 color: const Color(0xffffffff),
                 fontWeight: FontWeight.w700,
               ),
@@ -34,7 +35,7 @@ class XDLanding extends StatelessWidget {
             right: -2,
             child: Container(
               width: double.infinity,
-              height: size.height / 3.6,
+              height: size.height / 3,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.cover,
@@ -48,7 +49,7 @@ class XDLanding extends StatelessWidget {
           Positioned(
             left: 0,
             right: 0,
-            top: tol,
+            top: size.height * 0.3,
             bottom: 0,
             child: Container(
               padding: EdgeInsets.only(
@@ -66,27 +67,22 @@ class XDLanding extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
-                    flex: 3,
+                    flex: 5,
                     child: Container(
-                      margin: EdgeInsets.only(top: 3, bottom: 5),
-                      width: size.width / 1.2,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage(
-                            "assets/logow.png",
-                          ),
-                        ),
-                      ),
+                      width: size.width,
+                      child: Lottie.network(
+                          'https://assets6.lottiefiles.com/packages/lf20_fwykef3x.json',
+                          fit: BoxFit.cover),
                     ),
                   ),
                   Expanded(
-                    flex: 3,
+                    flex: 1,
                     child: Text(
-                      'WELCOME\n\nto the Real Estate Property Management .\n An app that represents our Algerian company that\n operates an online marketplace for lodging ,\n primarily homestays for vacation rentals,\n and tourism activities.\n the platform is also accessible via website .',
+                      'Let start your Adventure',
                       style: TextStyle(
                         fontFamily: 'Poppins',
-                        fontSize: 14,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
                         color: const Color(0xff252427),
                       ),
                       textAlign: TextAlign.center,
@@ -101,9 +97,9 @@ class XDLanding extends StatelessWidget {
                       width: size.width,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.black,
+                          primary: Color.fromARGB(220, 1, 1, 1),
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(28)),
+                              borderRadius: BorderRadius.circular(22)),
                         ),
                         onPressed: () {
                           logout();
@@ -140,7 +136,7 @@ class XDLanding extends StatelessWidget {
                             color: Colors.black,
                           ),
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(28)),
+                              borderRadius: BorderRadius.circular(22)),
                         ),
                         onPressed: () {
                           logout();

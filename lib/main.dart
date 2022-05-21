@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:memoire/theme/color.dart';
-import 'screens/login/landing.dart';
+import 'package:memoire/welcome_screens.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: primary,
       ),
-      home: XDLanding(),
+      home: WelcomeScreen(),
     );
   }
 }

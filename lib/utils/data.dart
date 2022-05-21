@@ -334,36 +334,36 @@ List images = [
 
 List equipements = [
   {
-    "name" : "conditionr",
-    "icon" :  FontAwesomeIcons.snowflake,
+    "name" : "Bed",
+    "icon" :  FontAwesomeIcons.bed,
   },
   {
-    "name" : "Villa",
-    "icon" :  FontAwesomeIcons.baby
+    "name" : "Bath",
+    "icon" :  FontAwesomeIcons.bath
   },
   {
-    "name" : "House",
-    "icon" :  FontAwesomeIcons.home
+    "name" : "Wifi",
+    "icon" :  FontAwesomeIcons.wifi
   },
   {
-    "name" : "Shop",
-    "icon" :  FontAwesomeIcons.storeAlt
+    "name" : "Water",
+    "icon" :  FontAwesomeIcons.faucet
   },
   {
-    "name" : "Building",
-    "icon" :  FontAwesomeIcons.building
+    "name" : "Gaz",
+    "icon" :  FontAwesomeIcons.fire
   },
   {
-    "name" : "Building",
-    "icon" :  FontAwesomeIcons.building
+    "name" : "Clim",
+    "icon" :  FontAwesomeIcons.snowflake
   },
   {
-    "name" : "Building",
-    "icon" :  FontAwesomeIcons.building
+    "name" : "TV",
+    "icon" :  FontAwesomeIcons.tv
   },
   {
-    "name" : "Building",
-    "icon" :  FontAwesomeIcons.building
+    "name" : "Pool",
+    "icon" :  FontAwesomeIcons.swimmingPool
   },
   {
     "name" : "Building",
