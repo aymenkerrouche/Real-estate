@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:memoire/theme/color.dart';
 import 'package:memoire/utils/data.dart';
+import 'package:memoire/widgets/rate.dart';
+import 'package:readmore/readmore.dart';
 
 import 'custom_image.dart';
 import 'icon_box.dart';
@@ -29,7 +31,6 @@ class PropertyItem extends StatefulWidget {
 }
 
 class _PropertyItemState extends State<PropertyItem> {
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -72,20 +73,20 @@ class _PropertyItemState extends State<PropertyItem> {
               height: widget.height,
             ),
             Positioned(
-                    right: 20,
-                    top: 140.0 - 20,
-                    child: IconBox(
-                      bgColor: cardColor,
-                      pad: 3,
-                      onTap: widget.onTap,
-                      child: Icon(
-                        widget.data.selfLiked == true
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        color: actionColor,
-                        size: 30,
-                      ),
-                    )),
+                right: 20,
+                top: 140.0 - 20,
+                child: IconBox(
+                  bgColor: cardColor,
+                  pad: 3,
+                  onTap: widget.onTap,
+                  child: Icon(
+                    widget.data.selfLiked == true
+                        ? Icons.favorite
+                        : Icons.favorite_border,
+                    color: actionColor,
+                    size: 30,
+                  ),
+                )),
             Positioned(
                 left: 15,
                 top: widget.height + 15,
@@ -289,16 +290,17 @@ class _PhotosState extends State<Photos> {
   }
 }
 
-
 class EditOffer extends StatefulWidget {
-  EditOffer({Key? key,
+  EditOffer(
+      {Key? key,
       required this.data,
       this.height = 150.0,
       this.marg = 20.0,
       this.child,
       this.onTap,
-      this.ontap}) : super(key: key);
-      final data;
+      this.ontap})
+      : super(key: key);
+  final data;
   final height;
   final marg;
   Widget? child;
@@ -312,7 +314,7 @@ class EditOffer extends StatefulWidget {
 class _EditOfferState extends State<EditOffer> {
   @override
   Widget build(BuildContext context) {
-     Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: widget.ontap,
       child: Container(
@@ -352,18 +354,18 @@ class _EditOfferState extends State<EditOffer> {
               height: widget.height,
             ),
             Positioned(
-                    right: 20,
-                    top: 120,
-                    child: IconBox(
-                      bgColor: cardColor,
-                      pad: 3,
-                      onTap: widget.onTap,
-                      child: Icon(
-                        Icons.more_vert_rounded,
-                        color: primary,
-                        size: 30,
-                      ),
-                    )),
+                right: 20,
+                top: 120,
+                child: IconBox(
+                  bgColor: cardColor,
+                  pad: 3,
+                  onTap: widget.onTap,
+                  child: Icon(
+                    Icons.more_vert_rounded,
+                    color: primary,
+                    size: 30,
+                  ),
+                )),
             Positioned(
                 left: 15,
                 top: widget.height + 15,
@@ -411,3 +413,164 @@ class _EditOfferState extends State<EditOffer> {
     );
   }
 }
+
+class Comments extends StatefulWidget {
+  Comments({
+    Key? key,
+    required this.data,
+    this.height = 150.0,
+    this.marg = 20.0,
+    this.child,
+    this.onTap,
+  }) : super(key: key);
+  final data;
+  final height;
+  final marg;
+  Widget? child;
+  void Function()? onTap;
+
+  @override
+  State<Comments> createState() => _CommentsState();
+}
+
+class _CommentsState extends State<Comments> {
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      margin: EdgeInsets.only(right: 15),
+      constraints: BoxConstraints(
+        minHeight: size.height * 0.155,
+      ),
+      width: size.width * 0.9,
+      child: ListTile(
+        contentPadding: EdgeInsets.all(15),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        tileColor: primary.withOpacity(0.15),
+        leading: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 25.0,
+              backgroundImage: NetworkImage(
+                'http://192.168.230.38/first/storage/app/${widget.data.user.image}',
+              ),
+            ),
+          ],
+        ),
+        title: Text(
+          "${widget.data.user.name}",
+          style: TextStyle(color: primary),
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                SmoothStarRating(
+                  starCount: 5,
+                  color: red,
+                  allowHalfRating: true,
+                  rating: 4.0,
+                  size: 12.0,
+                  borderColor: mainColor,
+                  onRatingChanged: (double rating) {},
+                ),
+                SizedBox(width: 6.0),
+                Text(
+                  "February 14, 2020",
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: darker,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 7.0),
+            ReadMoreText(
+              "${widget.data.comment}",
+              style: TextStyle(color: primary),
+              trimLines: 2,
+              colorClickableText: red,
+              trimMode: TrimMode.Line,
+              trimCollapsedText: 'Show more',
+              trimExpandedText: 'Hide',
+              moreStyle: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: darker,
+                  overflow: TextOverflow.fade),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+//  Container(
+//         margin: EdgeInsets.only(right: 15),
+//         height: size.height * 0.155,
+//         width: size.width * 0.9,
+//         child: ListTile(
+//           contentPadding: EdgeInsets.all(15),
+//           shape:
+//               RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
+//           tileColor: primary,
+//           leading: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               CircleAvatar(
+//                 radius: 25.0,
+//                 backgroundImage: AssetImage(
+//                   "${comment!.user!.image}",
+//                 ),
+//               ),
+//             ],
+//           ),
+//           title: Text(
+//             "${showComments[index]}",
+//             style: TextStyle(color: white),
+//           ),
+//           subtitle: Column(
+//             children: <Widget>[
+//               Row(
+//                 children: <Widget>[
+//                   SmoothStarRating(
+//                     starCount: 5,
+//                     color: ratingBG,
+//                     allowHalfRating: true,
+//                     rating: 4.0,
+//                     size: 12.0,
+//                     borderColor: mainColor,
+//                     onRatingChanged: (double rating) {},
+//                   ),
+//                   SizedBox(width: 6.0),
+//                   Text(
+//                     "February 14, 2020",
+//                     style: TextStyle(
+//                       fontSize: 12,
+//                       color: white,
+//                       fontWeight: FontWeight.w300,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//               SizedBox(height: 7.0),
+//               ReadMoreText(
+//                 "${comment!.comment}",
+//                 style: TextStyle(color: white),
+//                 trimLines: 2,
+//                 colorClickableText: red,
+//                 trimMode: TrimMode.Line,
+//                 trimCollapsedText: 'Show more',
+//                 trimExpandedText: 'Hide',
+//                 moreStyle: TextStyle(
+//                     fontSize: 14, fontWeight: FontWeight.bold, color: darker),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),

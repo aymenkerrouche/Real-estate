@@ -331,7 +331,6 @@ List images = [
 ];
 
 
-
 List equipements = [
   {
     "name" : "Bed",

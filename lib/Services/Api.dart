@@ -9,10 +9,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'user.dart';
 
 class Api {
-  final String _baseUrl = 'http://192.168.230.38:8000/api';
   postData(data, apiUrl) async {
     String token = await getToken();
-    var fullUrl = _baseUrl + apiUrl;
+    var fullUrl = url + apiUrl;
     return await http.post(Uri.parse(fullUrl),
         body: jsonEncode(data),
         headers: {
@@ -35,7 +34,7 @@ Future<ApiResponse> login (String email, String password) async {
   ApiResponse apiResponse = ApiResponse();
   try{
     final response = await http.post(
-      Uri.parse('http://192.168.230.38:8000/api/login'),
+      Uri.parse('$url/login'),
       headers: {'Accept': 'application/json'},
       body: {'email': email, 'password': password}
     );
@@ -76,7 +75,7 @@ Future<ApiResponse> register(String name, String email, String password, String 
 
   ApiResponse apiResponse = ApiResponse();
     final response = await http.post(
-      Uri.parse('http://192.168.230.38:8000/api/register'),
+      Uri.parse('$url/register'),
       headers: {'Accept': 'application/json',}, 
       body: data
     );
@@ -155,8 +154,6 @@ Future<ApiResponse> updateUser([String? name, String? email, String? password]) 
           'password': password,
       };}
 
-    
-
     if (password == null) {
       body = {
         'name': name,
@@ -178,7 +175,7 @@ Future<ApiResponse> updateUser([String? name, String? email, String? password]) 
 
 
     final response = await http.patch(
-      Uri.parse('http://192.168.230.38:8000/api/user'),
+      Uri.parse('$url/user'),
       headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token'

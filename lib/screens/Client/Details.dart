@@ -1,10 +1,12 @@
-// ignore_for_file: sized_box_for_whitespace, deprecated_member_use, file_names, use_key_in_widget_constructors, prefer_const_constructors, unnecessary_null_comparison, prefer_const_literals_to_create_immutables
+// ignore_for_file: sized_box_for_whitespace, deprecated_member_use, file_names, use_key_in_widget_constructors, prefer_const_constructors, unnecessary_null_comparison, prefer_const_literals_to_create_immutables, use_build_context_synchronously, unused_field, prefer_typing_uninitialized_variables
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:memoire/Services/Api.dart';
+import 'package:memoire/Services/comment.dart';
 import 'package:memoire/Services/offer.dart';
 import 'package:memoire/Services/user.dart';
 import 'package:memoire/theme/color.dart';
@@ -36,8 +38,15 @@ class _ProductDetailsState extends State<ProductDetails> {
   double? latitude;
   LatLng? lo;
   var phone;
+  List _commentsList = [];
+  List showComments = [];
+  Comment? comment;
+  String? newComment;
 
   Future<void> detais() async {
+    data.clear();
+    _commentsList.clear();
+    showComments.clear();
     userId = await getUserId();
     ApiResponse response = await getDetailsOffer(widget.id);
     if (response.error == null) {
@@ -51,6 +60,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         longitude = offer!.longitude!;
         lo = LatLng(latitude!, longitude!);
         getNum();
+        _getComments();
       });
     } else if (response.error == unauthorized) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -184,7 +194,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             padding: EdgeInsets.only(bottom: 5.0, top: 2.0),
                             child: SmoothStarRating(
                               starCount: 5,
-                              color: ratingBG,
+                              color: red,
                               allowHalfRating: true,
                               rating: 4.0,
                               size: 15.0,
@@ -286,11 +296,30 @@ class _ProductDetailsState extends State<ProductDetails> {
                           SizedBox(height: 25.0),
 
                           //Comments
-                          Text(
-                            "Comments",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w800,
+                          Container(
+                            padding: EdgeInsets.only(right: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Comments",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    openDialog();
+                                  },
+                                  child: SvgPicture.asset(
+                                    'assets/icons/add.svg',
+                                    color: primary,
+                                    width: 28,
+                                    height: 28,
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                           SizedBox(height: 25.0),
@@ -417,74 +446,11 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
 
   listComments() {
-    Size size = MediaQuery.of(context).size;
     List<Widget> lists = List.generate(
-      comments.length,
-      (index) => Container(
-        margin: EdgeInsets.only(right: 15),
-        height: size.height * 0.155,
-        width: size.width * 0.9,
-        child: ListTile(
-          contentPadding: EdgeInsets.all(15),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
-          tileColor: primary,
-          leading: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                radius: 25.0,
-                backgroundImage: AssetImage(
-                  "${comments[index]['img']}",
-                ),
-              ),
-            ],
-          ),
-          title: Text(
-            "${comments[index]['name']}",
-            style: TextStyle(color: white),
-          ),
-          subtitle: Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  SmoothStarRating(
-                    starCount: 5,
-                    color: ratingBG,
-                    allowHalfRating: true,
-                    rating: 4.0,
-                    size: 12.0,
-                    borderColor: mainColor,
-                    onRatingChanged: (double rating) {},
-                  ),
-                  SizedBox(width: 6.0),
-                  Text(
-                    "February 14, 2020",
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: white,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 7.0),
-              ReadMoreText(
-                "${comments[index]["comment"]}",
-                style: TextStyle(color: white),
-                trimLines: 2,
-                colorClickableText: red,
-                trimMode: TrimMode.Line,
-                trimCollapsedText: 'Show more',
-                trimExpandedText: 'Hide',
-                moreStyle: TextStyle(
-                    fontSize: 14, fontWeight: FontWeight.bold, color: darker),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+        showComments.length,
+        (index) => Comments(
+              data: showComments[index],
+            ));
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       padding: EdgeInsets.only(bottom: 5),
@@ -499,4 +465,74 @@ class _ProductDetailsState extends State<ProductDetails> {
       phone = phone[0]['phone'];
     }
   }
+
+  // Get comments
+  Future<void> _getComments() async {
+    showComments.clear;
+    _commentsList.clear;
+    ApiResponse response = await getComments(offer!.id!);
+    if (response.error == null) {
+      setState(() {
+        _commentsList = response.data as List<dynamic>;
+        for (int i = 0; i < _commentsList.length; i++) {
+          comment = Comment.fromJson(_commentsList[i]);
+          showComments.add(comment);
+        }
+      });
+    } else if (response.error == unauthorized) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(unauthorized)));
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('${response.error}')));
+    }
+  }
+
+  // Get comments
+  Future<void> _setComment() async {
+    userId = await getUserId();
+    ApiResponse response = await createComment(
+      offer!.id!,
+      newComment,
+    );
+    if (response.error == null) {
+      setState(() {
+        detais();
+      });
+    } else if (response.error == unauthorized) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(unauthorized)));
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('${response.error}')));
+    }
+  }
+
+  Future openDialog() => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Add comment'),
+          content: TextField(
+            onChanged: (value) {
+              newComment = value;
+            },
+            decoration: InputDecoration(
+              hintText: 'Enter your comment',
+            ),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  setState(() {
+                    setState(() {
+                      showComments.clear;
+                      _commentsList.clear;
+                    });
+                  });
+                  _setComment().then((value) => Navigator.pop(context));
+                },
+                child: Text('Submit'))
+          ],
+        ),
+      );
 }

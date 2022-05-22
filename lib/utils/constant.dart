@@ -5,7 +5,7 @@ class Constants {
 }
 
 const int ANIMATED_BODY_MS = 500;
-
+const String url = 'http://192.168.230.38:8000/api';
 
 // ----- Errors -----
 const serverError = 'Server error';
@@ -21,7 +21,8 @@ List comments = [
   },
   {
     "img": "assets/back.png",
-    "comment": "nice view, I really like it, I hope to take it back,nice view,\n I really like it, I hope to take it back",
+    "comment":
+        "nice view, I really like it, I hope to take it back,nice view,\n I really like it, I hope to take it back",
     "name": "Aya"
   },
   {
@@ -38,5 +39,3 @@ List comments = [
     "name": "Aya"
   }
 ];
-
-

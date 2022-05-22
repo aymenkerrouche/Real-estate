@@ -121,7 +121,7 @@ Future<ApiResponse> getOffers() async {
   try {
     String token = await getToken();
     final response = await http
-        .get(Uri.parse('http://192.168.230.38:8000/api/offer'), headers: {
+        .get(Uri.parse('$url/offer'), headers: {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token'
     });
@@ -150,7 +150,7 @@ Future<ApiResponse> getDetailsOffer(int offerId) async {
   try {
     String token = await getToken();
     final response = await http.get(
-        Uri.parse('http://192.168.230.38:8000/api/offer/$offerId'),
+        Uri.parse('$url/offer/$offerId'),
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer $token'
@@ -180,7 +180,7 @@ Future<ApiResponse> createPost(String body, String? image) async {
   try {
     String token = await getToken();
     final response = await http.post(
-        Uri.parse('http://192.168.230.38:8000/api/user'),
+        Uri.parse('$url/user'),
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer $token'
@@ -217,7 +217,7 @@ Future<ApiResponse> editOffer(int id, String body) async {
   try {
     String token = await getToken();
     final response = await http
-        .patch(Uri.parse('http://192.168.230.38:8000/api/user/$id'), headers: {
+        .patch(Uri.parse('$url/user/$id'), headers: {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token'
     }, body: {
@@ -246,7 +246,7 @@ Future<ApiResponse> editOffer(int id, String body) async {
 
 updateData(data) async {
   String token = await getToken();
-  return await http.post(Uri.parse('http://192.168.230.38:8000/api/offer'),
+  return await http.post(Uri.parse('$url/offer'),
       body: jsonEncode(data),
       headers: {
         'Content-type': 'application/json',
@@ -261,7 +261,7 @@ Future<ApiResponse> deleteOffer(int Id) async {
   try {
     String token = await getToken();
     final response = await http.delete(
-        Uri.parse('http://192.168.230.38:8000/api/offer/$Id'),
+        Uri.parse('$url/offer/$Id'),
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer $token'
@@ -295,7 +295,7 @@ Future<ApiResponse> deleteOfferPhotos(int Id) async {
   try {
     String token = await getToken();
     final response = await http.delete(
-        Uri.parse('http://192.168.230.38:8000/api/photo/$Id'),
+        Uri.parse('$url/photo/$Id'),
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer $token'
@@ -328,7 +328,7 @@ Future<ApiResponse> likeUnlikeOffer(int offerId) async {
   try {
     String token = await getToken();
     final response = await http.post(
-        Uri.parse('http://192.168.230.38:8000/api/offer/$offerId/likes'),
+        Uri.parse('$url/offer/$offerId/likes'),
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer $token'
@@ -359,7 +359,7 @@ Future<ApiResponse> UnlikeOffer(int offerId) async {
   try {
     String token = await getToken();
     final response = await http.post(
-        Uri.parse('http://192.168.230.38:8000/api/offer/$offerId/unlikes'),
+        Uri.parse('$url/offer/$offerId/unlikes'),
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer $token'
@@ -389,7 +389,7 @@ Future<ApiResponse> getFavorites() async {
   String token = await getToken();
 
   final response = await http
-      .get(Uri.parse('http://192.168.230.38:8000/api/likes'), headers: {
+      .get(Uri.parse('$url/likes'), headers: {
     'Accept': 'application/json',
     'Authorization': 'Bearer $token'
   });
@@ -412,7 +412,7 @@ Future<ApiResponse> getFavorites() async {
 
 //Offer images
 offerImage(List images, offer_id) async {
-  var fullUrl = 'http://192.168.230.38:8000/api/photo';
+  var fullUrl = '$url/photo';
   String token = await getToken();
   Map<String, String> headers = {
     'Content-Type': 'multipart/form-data',
@@ -437,7 +437,7 @@ getOfferID() async {
   try {
     String token = await getToken();
     final response = await http
-        .get(Uri.parse('http://192.168.230.38:8000/api/get/id'), headers: {
+        .get(Uri.parse('$url/get/id'), headers: {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token'
     });
@@ -467,7 +467,7 @@ Future<ApiResponse> getAgencyOffers() async {
   String token = await getToken();
 
   final response = await http
-      .get(Uri.parse('http://192.168.230.38:8000/api/agency'), headers: {
+      .get(Uri.parse('$url/agency'), headers: {
     'Accept': 'application/json',
     'Authorization': 'Bearer $token'
   });
@@ -495,7 +495,7 @@ Future<ApiResponse> num(id) async {
   String token = await getToken();
 
   final response = await http.get(
-      Uri.parse('http://192.168.230.38:8000/api/agencyPhone/$id'),
+      Uri.parse('$url/agencyPhone/$id'),
       headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token'
