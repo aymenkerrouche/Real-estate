@@ -1,9 +1,10 @@
-// ignore_for_file: sized_box_for_whitespace, deprecated_member_use, file_names, use_key_in_widget_constructors, prefer_const_constructors, unnecessary_null_comparison, prefer_const_literals_to_create_immutables, use_build_context_synchronously, unused_field, prefer_typing_uninitialized_variables
+// ignore_for_file: sized_box_for_whitespace, deprecated_member_use, file_names, use_key_in_widget_constructors, prefer_const_constructors, unnecessary_null_comparison, prefer_const_literals_to_create_immutables, use_build_context_synchronously, unused_field, prefer_typing_uninitialized_variables, library_private_types_in_public_api
+
+import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:memoire/Services/Api.dart';
 import 'package:memoire/Services/comment.dart';
@@ -42,6 +43,9 @@ class _ProductDetailsState extends State<ProductDetails> {
   List showComments = [];
   Comment? comment;
   String? newComment;
+  List getimgs = [];
+  List showImages = [];
+  var img;
 
   Future<void> detais() async {
     data.clear();
@@ -75,7 +79,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   void initState() {
-    detais();
+    detais().then((value) => _getImages());
     super.initState();
   }
 
@@ -84,7 +88,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     Size size = MediaQuery.of(context).size;
     return RefreshIndicator(
       onRefresh: () {
-        return detais();
+        return detais().then((value) => _getImages());
       },
       child: Scaffold(
         body: _loading
@@ -98,11 +102,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                         //photos
                         Container(
                           margin: EdgeInsets.only(bottom: 20),
-                          height: size.height * 0.3,
+                          height: size.height * 0.35,
                           width: size.width,
                           child: CarouselSlider(
                               options: CarouselOptions(
-                                height: 250,
+                                height: 300,
                                 enlargeCenterPage: true,
                                 disableCenter: true,
                                 viewportFraction: 1,
@@ -110,9 +114,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 autoPlayInterval: Duration(seconds: 10),
                               ),
                               items: List.generate(
-                                  images.length,
-                                  (index) =>
-                                      Photos(data: images[index], marg: 10.0))),
+                                  showImages.length,
+                                  (index) => Photos(
+                                      data: showImages[index], marg: 10.0))),
                         ),
 
                         //Favorite
@@ -488,7 +492,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     }
   }
 
-  // Get comments
+  // set comments
   Future<void> _setComment() async {
     userId = await getUserId();
     ApiResponse response = await createComment(
@@ -535,4 +539,24 @@ class _ProductDetailsState extends State<ProductDetails> {
           ],
         ),
       );
+
+  // Get Images
+  Future<void> _getImages() async {
+    ApiResponse response = await getImages(offer!.id!);
+    if (response.error == null) {
+      setState(() {
+        getimgs = response.data as List<dynamic>;
+        for (int i = 0; i < getimgs.length; i++) {
+          img = getimgs[i];
+          showImages.add(img["image"]);
+        }
+      });
+    } else if (response.error == unauthorized) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(unauthorized)));
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('${response.error}')));
+    }
+  }
 }

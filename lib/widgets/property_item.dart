@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, prefer_typing_uninitialized_variables, prefer_const_constructors, avoid_print, must_be_immutable
+// ignore_for_file: prefer_const_constructors_in_immutables, prefer_typing_uninitialized_variables, prefer_const_constructors, avoid_print, must_be_immutable, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
 
@@ -251,11 +251,12 @@ class _PopularState extends State<Popular> {
 }
 
 class Photos extends StatefulWidget {
-  const Photos({Key? key, this.height = 150.0, this.marg = 20.0, this.data})
+  Photos({Key? key, this.height = 300.0, this.marg = 20.0, this.data})
       : super(key: key);
   final height;
   final marg;
   final data;
+  bool isShadow = true;
   @override
   State<Photos> createState() => _PhotosState();
 }
@@ -279,15 +280,62 @@ class _PhotosState extends State<Photos> {
           ),
         ],
       ),
-      child: CustomImage(
-        widget.data["image"],
-        radius: 25,
+      child: Container(
         width: double.infinity,
         height: widget.height,
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(45)),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(45)),
+          boxShadow: [
+            if (widget.isShadow)
+              BoxShadow(
+                color: shadowColor.withOpacity(0.1),
+                spreadRadius: 1,
+                blurRadius: 1,
+                offset: Offset(0, 1), // changes position of shadow
+              ),
+          ],
+        ),
+        child: GestureDetector(
+          onTap: () async {
+            await showDialog(
+                context: context,
+                builder: (_) => imageDialog(
+                    'http://192.168.230.38/first/storage/app/${widget.data}',
+                    context));
+          },
+          child: ClipRRect(
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(45)),
+            child: Image.network(
+              "http://192.168.230.38/first/storage/app/${widget.data}",
+              fit: BoxFit.fill,
+            ),
+          ),
+        ),
       ),
     );
   }
+}
+
+Widget imageDialog(path, context) {
+  return Dialog(
+    elevation: 80,
+    child: Container(
+      padding: EdgeInsets.all(3),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(45)),
+          boxShadow: [
+            BoxShadow(
+              color: shadowColor.withOpacity(0.5),
+              spreadRadius: 10,
+              blurRadius: 10,
+            ),
+          ]),
+      child: Image.network(
+        '$path',
+        fit: BoxFit.cover,
+      ),
+    ),
+  );
 }
 
 class EditOffer extends StatefulWidget {
@@ -508,69 +556,3 @@ class _CommentsState extends State<Comments> {
     );
   }
 }
-
-
-//  Container(
-//         margin: EdgeInsets.only(right: 15),
-//         height: size.height * 0.155,
-//         width: size.width * 0.9,
-//         child: ListTile(
-//           contentPadding: EdgeInsets.all(15),
-//           shape:
-//               RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
-//           tileColor: primary,
-//           leading: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               CircleAvatar(
-//                 radius: 25.0,
-//                 backgroundImage: AssetImage(
-//                   "${comment!.user!.image}",
-//                 ),
-//               ),
-//             ],
-//           ),
-//           title: Text(
-//             "${showComments[index]}",
-//             style: TextStyle(color: white),
-//           ),
-//           subtitle: Column(
-//             children: <Widget>[
-//               Row(
-//                 children: <Widget>[
-//                   SmoothStarRating(
-//                     starCount: 5,
-//                     color: ratingBG,
-//                     allowHalfRating: true,
-//                     rating: 4.0,
-//                     size: 12.0,
-//                     borderColor: mainColor,
-//                     onRatingChanged: (double rating) {},
-//                   ),
-//                   SizedBox(width: 6.0),
-//                   Text(
-//                     "February 14, 2020",
-//                     style: TextStyle(
-//                       fontSize: 12,
-//                       color: white,
-//                       fontWeight: FontWeight.w300,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//               SizedBox(height: 7.0),
-//               ReadMoreText(
-//                 "${comment!.comment}",
-//                 style: TextStyle(color: white),
-//                 trimLines: 2,
-//                 colorClickableText: red,
-//                 trimMode: TrimMode.Line,
-//                 trimCollapsedText: 'Show more',
-//                 trimExpandedText: 'Hide',
-//                 moreStyle: TextStyle(
-//                     fontSize: 14, fontWeight: FontWeight.bold, color: darker),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),

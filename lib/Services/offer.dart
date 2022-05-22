@@ -410,7 +410,7 @@ Future<ApiResponse> getFavorites() async {
   return apiResponse;
 }
 
-//Offer images
+//create Offer images
 offerImage(List images, offer_id) async {
   var fullUrl = '$url/photo';
   String token = await getToken();
@@ -506,6 +506,33 @@ Future<ApiResponse> num(id) async {
       apiResponse.data = jsonDecode(response.body);
       apiResponse.data as List;
       print(apiResponse.data);
+      break;
+    case 401:
+      apiResponse.error = unauthorized;
+      break;
+    default:
+      apiResponse.error = somethingWentWrong;
+      break;
+  }
+
+  return apiResponse;
+}
+
+
+//get offer images
+Future<ApiResponse> getImages(int id) async {
+  ApiResponse apiResponse = ApiResponse();
+  String token = await getToken();
+
+  final response = await http.get(Uri.parse('$url/photo/$id'), headers: {
+    'Accept': 'application/json',
+    'Authorization': 'Bearer $token'
+  });
+
+  switch (response.statusCode) {
+    case 200:
+      apiResponse.data = jsonDecode(response.body);
+      apiResponse.data as List;
       break;
     case 401:
       apiResponse.error = unauthorized;

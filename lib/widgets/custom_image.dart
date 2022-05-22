@@ -53,7 +53,7 @@ class CustomImage extends StatelessWidget {
             ? CachedNetworkImage(
                 cacheManager: CacheManager.custom(Config(
                   'bb',
-                  stalePeriod: const Duration(minutes: 1),
+                  stalePeriod: const Duration(minutes: 5),
                 )),
                 imageUrl: image,
                 placeholder: (context, url) => BlankImageWidget(),
