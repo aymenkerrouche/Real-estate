@@ -380,7 +380,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                               Container(
                                 height: size.width * 0.15,
                                 width: size.width * 0.5,
-                                margin: EdgeInsets.only(bottom: 10),
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     primary: Colors.green.shade500,
