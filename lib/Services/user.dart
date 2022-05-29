@@ -15,46 +15,33 @@ class User {
   String? token;
   var usertype;
 
-  User({
-    this.id,
-    this.name,
-    this.image,
-    this.email,
-    this.token,
-    this.usertype
-  });
-
+  User({this.id, this.name, this.image, this.email, this.token, this.usertype});
 
   // function to convert json data to user model
-  factory User.fromJson(Map<String, dynamic> json){
+  factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['user']['id'],
-      name: json['user']['name'],
-      email: json['user']['email'],
-      image: json['user']['image'],
-      token: json['token'],
-      usertype: json['user']['type']
-    );
+        id: json['user']['id'],
+        name: json['user']['name'],
+        email: json['user']['email'],
+        image: json['user']['image'],
+        token: json['token'],
+        usertype: json['user']['type']);
   }
 }
-
-
 
 Future<ApiResponse> getUserDetail() async {
   ApiResponse apiResponse = ApiResponse();
   try {
     String token = await getToken();
-    final response = await http.get(
-      Uri.parse('http://192.168.230.38:8000/api/user'),
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token'
-      });
+    final response = await http.get(Uri.parse('$url/user'), headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token'
+    });
 
-    switch(response.statusCode){
+    switch (response.statusCode) {
       case 200:
         apiResponse.data = User.fromJson(jsonDecode(response.body));
-        
+
         break;
       case 401:
         apiResponse.error = unauthorized;
@@ -63,13 +50,11 @@ Future<ApiResponse> getUserDetail() async {
         apiResponse.error = somethingWentWrong;
         break;
     }
-  } 
-  catch(e) {
+  } catch (e) {
     apiResponse.error = serverError;
   }
   return apiResponse;
 }
-
 
 // get token
 Future<String> getToken() async {
@@ -83,35 +68,32 @@ Future<int> getUserId() async {
   return pref.getInt('userId') ?? 0;
 }
 
+postDataWithImage(filepath) async {
+  var fullUrl = '$url/image';
+  String token = await getToken();
+  Map<String, String> headers = {
+    'Content-Type': 'multipart/form-data',
+    'Accept': 'application/json',
+    'Authorization': 'Bearer $token'
+  };
+  var request = http.MultipartRequest('POST', Uri.parse(fullUrl))
+    ..headers.addAll(headers)
+    ..files.add(await http.MultipartFile.fromPath('image', filepath));
+  return await request.send();
+}
 
-
- postDataWithImage(filepath) async {
-    var fullUrl = 'http://192.168.230.38:8000/api/image';
-    String token = await getToken();
-    Map<String, String> headers = {
-      'Content-Type': 'multipart/form-data',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token'
-    };
-    var request = http.MultipartRequest('POST', Uri.parse(fullUrl))
-      ..headers.addAll(headers)
-      ..files.add(await http.MultipartFile.fromPath('image', filepath));
-    return await request.send();
-  }
-
-
-  // Delete image
+// Delete image
 Future<ApiResponse> deleteImage() async {
   ApiResponse apiResponse = ApiResponse();
   try {
     String token = await getToken();
-    final response = await http.delete(Uri.parse('http://192.168.230.38:8000/api/user/image/delete'),
-    headers: {
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token'
-    });
+    final response = await http.delete(Uri.parse('$url/user/image/delete'),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token'
+        });
 
-    switch(response.statusCode){
+    switch (response.statusCode) {
       case 200:
         apiResponse.data = 'Image deleted';
         break;
@@ -125,8 +107,7 @@ Future<ApiResponse> deleteImage() async {
         apiResponse.error = somethingWentWrong;
         break;
     }
-  }
-  catch (e){
+  } catch (e) {
     apiResponse.error = serverError;
   }
   return apiResponse;
