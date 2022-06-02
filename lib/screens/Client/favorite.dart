@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, avoid_print, avoid_function_literals_in_foreach_calls
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, avoid_print, avoid_function_literals_in_foreach_calls, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:memoire/Services/Api.dart';

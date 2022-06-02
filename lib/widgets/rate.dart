@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, unnecessary_null_comparison, unnecessary_this, prefer_generic_function_type_aliases
+// ignore_for_file: use_key_in_widget_constructors, unnecessary_null_comparison, unnecessary_this, prefer_generic_function_type_aliases, no_leading_underscores_for_local_identifiers
 
 import 'package:flutter/material.dart';
 

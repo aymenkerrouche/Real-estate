@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors, prefer_const_constructors
+// ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors, prefer_const_constructors, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -87,6 +87,7 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
                     borderRadius: BorderRadius.circular(Get.width * 0.1),
                   ),
                 ),
+                alignment: Alignment.center,
                 child: Text(
                   initialPosition ? widget.values[0] : widget.values[1],
                   style: TextStyle(
@@ -96,7 +97,6 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                alignment: Alignment.center,
               ),
             ),
           ),

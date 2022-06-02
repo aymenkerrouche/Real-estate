@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, unused_field, prefer_final_fields, prefer_const_constructors, non_constant_identifier_names, unnecessary_string_interpolations
+// ignore_for_file: file_names, unused_field, prefer_final_fields, prefer_const_constructors, non_constant_identifier_names, unnecessary_string_interpolations, must_be_immutable, no_leading_underscores_for_local_identifiers
 
 import 'package:flutter/material.dart';
 

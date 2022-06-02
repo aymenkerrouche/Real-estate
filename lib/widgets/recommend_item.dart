@@ -5,17 +5,22 @@ import 'package:memoire/theme/color.dart';
 
 import 'custom_image.dart';
 
-
-
-
 class RecommendItem extends StatefulWidget {
-  RecommendItem({ Key? key, required this.data, this.onTap,this.width= 220,this.height=130,this.icon = Icons.place_outlined, this.onDoubleTap, }) : super(key: key);
+  RecommendItem({
+    Key? key,
+    required this.data,
+    this.onTap,
+    this.width = 220,
+    this.height = 130,
+    this.icon = Icons.place_outlined,
+    this.onDoubleTap,
+  }) : super(key: key);
   final data;
   final GestureTapCallback? onTap;
   double width;
   double height;
   IconData? icon;
-  final GestureTapCallback?onDoubleTap;
+  final GestureTapCallback? onDoubleTap;
   @override
   State<RecommendItem> createState() => _RecommendItemState();
 }
@@ -26,7 +31,8 @@ class _RecommendItemState extends State<RecommendItem> {
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
-          width: widget.width, height: widget.height,
+          width: widget.width,
+          height: widget.height,
           margin: EdgeInsets.only(right: 15),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
@@ -41,39 +47,57 @@ class _RecommendItemState extends State<RecommendItem> {
           ),
           child: Stack(
             children: [
-              CustomImage(widget.data["image"], radius: 20, width: double.infinity, height: double.infinity,),
+              CustomImage(
+                widget.data["image"],
+                radius: 20,
+                width: double.infinity,
+                height: double.infinity,
+              ),
               Container(
-                width: double.infinity, height: double.infinity,
+                width: double.infinity,
+                height: double.infinity,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    colors: [
-                      Colors.black.withOpacity(.8),
-                      Colors.white.withOpacity(.01),
-                    ]
-                  )
-                ),
+                    borderRadius: BorderRadius.circular(20),
+                    gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: [
+                          Colors.black.withOpacity(.8),
+                          Colors.white.withOpacity(.01),
+                        ])),
               ),
               Positioned(
-                bottom: 12, left: 10,
+                bottom: 12,
+                left: 10,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Icon(widget.icon, color: Colors.white, size: 15,),
-                        SizedBox(width: 5,),
-                        Text(widget.data["name"], maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w600),),
+                        Icon(
+                          widget.icon,
+                          color: Colors.white,
+                          size: 15,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          widget.data["name"],
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600),
+                        ),
                       ],
                     ),
                   ],
                 ),
               ),
             ],
-          )
-        ),
+          )),
     );
   }
 }
@@ -84,7 +108,8 @@ class MonthOption extends StatelessWidget {
     Key? key,
     required this.img,
     required this.onTap,
-    required this.selected, type,
+    required this.selected,
+    type,
   }) : super(key: key);
 
   final String title;
@@ -99,7 +124,7 @@ class MonthOption extends StatelessWidget {
       child: Material(
         child: Ink.image(
           fit: BoxFit.cover,
-          image: NetworkImage(img),
+          image: AssetImage(img),
           child: InkWell(
             onTap: onTap,
             child: Align(
@@ -120,9 +145,7 @@ class MonthOption extends StatelessWidget {
                     duration: const Duration(milliseconds: 300),
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: selected
-                          ? mainColor
-                          : Colors.black54,
+                      color: selected ? mainColor : Colors.black54,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Text(

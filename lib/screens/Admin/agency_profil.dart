@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_import, avoid_print
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_import, avoid_print, use_build_context_synchronously
 
 import 'dart:async';
 import 'dart:io';
@@ -73,7 +73,7 @@ bool out = false;
         user!.image = '';
         user!.usertype=2;
         usertype=2;
-        imageURL = 'http://192.168.230.38/first/storage/app/${user!.image}';
+        imageURL = '$urlImages/first/storage/app/${user!.image}';
         profile = {
           "name" : "user",
           "image" : "https://img.icons8.com/fluency/240/000000/user-male-circle.png",
@@ -109,7 +109,7 @@ bool out = false;
       Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          IconBox(child: SvgPicture.asset('assets/icons/setting.svg', color: primary,), radius: 50),
+          IconBox(radius: 50, child: SvgPicture.asset('assets/icons/setting.svg', color: primary,)),
         ],
       );
   }
@@ -341,7 +341,7 @@ bool out = false;
           profile["name"]=user!.name!;
           profile["email"]=user!.email!;
           if (user!.image != 'user.png') {
-            imageURL = 'http://192.168.230.38/first/storage/app/${user!.image!}';
+            imageURL = '$urlImages/first/storage/app/${user!.image!}';
             print(user!.image!); 
           }
         });

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, avoid_function_literals_in_foreach_calls
 
 import 'package:flutter/material.dart';
 import 'package:memoire/screens/Admin/add_offer.dart';

@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, prefer_const_constructors, unused_field, avoid_print, prefer_typing_uninitialized_variables, non_constant_identifier_names, unused_local_variable, camel_case_types, prefer_const_constructors_in_immutables, avoid_unnecessary_containers
+// ignore_for_file: must_be_immutable, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, prefer_const_constructors, unused_field, avoid_print, prefer_typing_uninitialized_variables, non_constant_identifier_names, unused_local_variable, camel_case_types, prefer_const_constructors_in_immutables, avoid_unnecessary_containers, library_private_types_in_public_api
 
 import 'dart:io';
 
@@ -265,20 +265,6 @@ class _TglState extends State<Tgl> {
                 selectedColor: appBarColor,
                 fillColor: primary,
                 borderRadius: BorderRadius.circular(45),
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 25),
-                      child: Text('Rent',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16),),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 25),
-                      child: Text('Sell',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16),),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 27),
-                      child: Text('Vacation',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16),),
-                    ),
-                  ],
                   onPressed: (int index) {
                     setState(() {
                       isSelected1[index] = !isSelected1[index];
@@ -306,6 +292,20 @@ class _TglState extends State<Tgl> {
                     });
                   },
                   isSelected: isSelected1,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 25),
+                      child: Text('Rent',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16),),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 25),
+                      child: Text('Sell',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16),),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 27),
+                      child: Text('Vacation',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16),),
+                    ),
+                  ],
               );
   }
 }
@@ -425,7 +425,7 @@ class _LogementTypeState extends State<LogementType> {
             LogementType.logement_type = 'Villa';
             break;
           case 3:
-            LogementType.logement_type = 'Duplex';
+            LogementType.logement_type = 'Garage';
             break;
           case 4:
             LogementType.logement_type = 'studio';

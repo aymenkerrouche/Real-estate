@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors, prefer_const_constructors, invalid_use_of_visible_for_testing_member
+// ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors, prefer_const_constructors, invalid_use_of_visible_for_testing_member, library_private_types_in_public_api
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -51,10 +51,6 @@ class CustomImage extends StatelessWidget {
         ),
         child: isNetwork
             ? CachedNetworkImage(
-                cacheManager: CacheManager.custom(Config(
-                  'bb',
-                  stalePeriod: const Duration(minutes: 5),
-                )),
                 imageUrl: image,
                 placeholder: (context, url) => BlankImageWidget(),
                 errorWidget: (context, url, error) => BlankImageWidget(),

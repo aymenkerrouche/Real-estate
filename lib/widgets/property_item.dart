@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:memoire/theme/color.dart';
-import 'package:memoire/utils/data.dart';
+import 'package:memoire/utils/constant.dart';
 import 'package:memoire/widgets/rate.dart';
 import 'package:readmore/readmore.dart';
 
@@ -67,7 +67,7 @@ class _PropertyItemState extends State<PropertyItem> {
               ),
             ),
             CustomImage(
-              widget.data.image.toString(),
+              '$urlImages/first/storage/app/${widget.data.image.toString()}',
               radius: 25,
               width: double.infinity,
               height: widget.height,
@@ -189,13 +189,6 @@ class _PopularState extends State<Popular> {
               right: 20,
               top: widget.height - 20,
               child: IconBox(
-                  child: Icon(
-                    widget.data["is_favorited"]
-                        ? Icons.favorite
-                        : Icons.favorite_border,
-                    color: actionColor,
-                    size: 30,
-                  ),
                   bgColor: cardColor,
                   pad: 3,
                   onTap: () {
@@ -207,7 +200,14 @@ class _PopularState extends State<Popular> {
                         widget.data["is_favorited"] = true;
                     }
                     setState(() {});
-                  })),
+                  },
+                  child: Icon(
+                    widget.data["is_favorited"]
+                        ? Icons.favorite
+                        : Icons.favorite_border,
+                    color: actionColor,
+                    size: 30,
+                  ))),
           Positioned(
               left: 15,
               top: widget.height + 15,
@@ -300,13 +300,12 @@ class _PhotosState extends State<Photos> {
             await showDialog(
                 context: context,
                 builder: (_) => imageDialog(
-                    'http://192.168.230.38/first/storage/app/${widget.data}',
-                    context));
+                    '$urlImages/first/storage/app/${widget.data}', context));
           },
           child: ClipRRect(
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(45)),
             child: Image.network(
-              "http://192.168.230.38/first/storage/app/${widget.data}",
+              "$urlImages/first/storage/app/${widget.data}",
               fit: BoxFit.fill,
             ),
           ),
@@ -501,7 +500,7 @@ class _CommentsState extends State<Comments> {
             CircleAvatar(
               radius: 25.0,
               backgroundImage: NetworkImage(
-                'http://192.168.230.38/first/storage/app/${widget.data.user.image}',
+                '$urlImages/first/storage/app/${widget.data.user.image}',
               ),
             ),
           ],

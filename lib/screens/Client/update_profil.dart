@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, prefer_const_constructors, prefer_typing_uninitialized_variables, sized_box_for_whitespace, avoid_print, unrelated_type_equality_checks
+// ignore_for_file: unused_local_variable, prefer_const_constructors, prefer_typing_uninitialized_variables, sized_box_for_whitespace, avoid_print, unrelated_type_equality_checks, use_build_context_synchronously
 
 import 'dart:async';
 

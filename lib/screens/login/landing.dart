@@ -70,8 +70,8 @@ class XDLanding extends StatelessWidget {
                     flex: 5,
                     child: Container(
                       width: size.width,
-                      child: Lottie.network(
-                          'https://assets6.lottiefiles.com/packages/lf20_fwykef3x.json',
+                      child: Lottie.asset(
+                          'assets/log/74247-blue-house.json',
                           fit: BoxFit.cover),
                     ),
                   ),

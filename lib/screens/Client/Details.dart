@@ -1,7 +1,5 @@
 // ignore_for_file: sized_box_for_whitespace, deprecated_member_use, file_names, use_key_in_widget_constructors, prefer_const_constructors, unnecessary_null_comparison, prefer_const_literals_to_create_immutables, use_build_context_synchronously, unused_field, prefer_typing_uninitialized_variables, library_private_types_in_public_api
 
-import 'dart:convert';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -428,7 +426,6 @@ class _ProductDetailsState extends State<ProductDetails> {
     if (response.error == null) {
       detais();
     } else if (response.error == unauthorized) {
-      print(unauthorized);
     } else {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('${response.error}')));

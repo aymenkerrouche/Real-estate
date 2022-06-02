@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_final_fields, prefer_const_constructors, non_constant_identifier_names, sized_box_for_whitespace, avoid_print, prefer_typing_uninitialized_variables
+// ignore_for_file: use_key_in_widget_constructors, prefer_final_fields, prefer_const_constructors, non_constant_identifier_names, sized_box_for_whitespace, avoid_print, prefer_typing_uninitialized_variables, library_private_types_in_public_api, no_leading_underscores_for_local_identifiers, prefer_interpolation_to_compose_strings
 
 import 'package:flutter/material.dart';
 
@@ -97,14 +97,14 @@ class _MapScreenState extends State<MapScreen> {
           SizedBox(height: 10,), 
           FloatingActionButton(
             onPressed: () => _setMarker(currentLocation),
-            child: Icon(Icons.add_location_alt_outlined),
             backgroundColor: Colors.black,
+            child: Icon(Icons.add_location_alt_outlined),
           ),
           SizedBox(height: 10,),
           FloatingActionButton(
             onPressed: () => _getMyLocation(),
-            child: Icon(Icons.gps_fixed),
             backgroundColor: Colors.black,
+            child: Icon(Icons.gps_fixed),
           ),
         ],
       ),

@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_new
+// ignore_for_file: unnecessary_new, no_leading_underscores_for_local_identifiers
 
 import 'package:location/location.dart';
 

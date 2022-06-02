@@ -5,7 +5,8 @@ class Constants {
 }
 
 const int ANIMATED_BODY_MS = 500;
-const String url = 'http://192.168.223.38:8000/api';
+const String url = "http://192.168.223.38:8000/api";
+const String urlImages = "http://192.168.223.38";
 
 // ----- Errors -----
 const serverError = 'Server error';
