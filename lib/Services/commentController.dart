@@ -1,31 +1,14 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 
 import 'package:memoire/utils/constant.dart';
 
 import 'Api.dart';
-import 'user.dart';
+import 'userController.dart';
 import 'package:http/http.dart' as http;
 
-class Comment {
-  int? id;
-  String? comment;
-  User? user;
-
-  Comment({this.id, this.comment, this.user});
-
-  // map json to comment model
-  factory Comment.fromJson(Map<String, dynamic> json) {
-    return Comment(
-        id: json['id'],
-        comment: json['comment'],
-        user: User(
-            id: json['user']['id'],
-            name: json['user']['name'],
-            image: json['user']['image']));
-  }
-}
-
-// Get post comments
+// Get offer comments
 Future<ApiResponse> getComments(int id) async {
   ApiResponse apiResponse = ApiResponse();
   try {

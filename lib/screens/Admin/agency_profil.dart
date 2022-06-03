@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:memoire/Services/Api.dart';
-import 'package:memoire/Services/user.dart';
+import 'package:memoire/Services/userController.dart';
+import 'package:memoire/models/user.dart';
 import 'package:memoire/screens/Admin/agency_offers.dart';
 import 'package:memoire/screens/Client/update_profil.dart';
 import 'package:memoire/screens/login/landing.dart';
@@ -24,7 +25,6 @@ import '../../main.dart';
 
 class AccountAg extends StatefulWidget {
   const AccountAg({Key? key}) : super(key: key);
-
   @override
   State<AccountAg> createState() => _AccountAgState();
 }
@@ -115,10 +115,13 @@ class _AccountAgState extends State<AccountAg> {
       padding: EdgeInsets.only(left: 15, right: 15, bottom: 10),
       child: Column(
         children: [
+
+          //header
           Column(
             children: [
               Stack(
                 children: [
+                  // profile pic
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
@@ -134,6 +137,8 @@ class _AccountAgState extends State<AccountAg> {
                                 bgColor: appBarColor,
                               )),
                   ),
+                  
+                  //add photo
                   Positioned(
                     bottom: -13,
                     right: -13,
@@ -148,7 +153,7 @@ class _AccountAgState extends State<AccountAg> {
                           Icons.add_a_photo_outlined,
                           color: darker,
                         ),
-                        onPressed: () => pickPic(),
+                        onPressed: () => picture(),
                       ),
                     ),
                   ),
@@ -157,6 +162,8 @@ class _AccountAgState extends State<AccountAg> {
               SizedBox(
                 height: 10,
               ),
+              
+              //name
               Text(
                 user!.name!,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
@@ -199,6 +206,8 @@ class _AccountAgState extends State<AccountAg> {
           SizedBox(
             height: 20,
           ),
+
+          //body
           Container(
             padding: EdgeInsets.only(left: 15, right: 15),
             decoration: BoxDecoration(
@@ -216,6 +225,8 @@ class _AccountAgState extends State<AccountAg> {
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+
+                  //profil options
                   SettingItem(
                     title: "Profile",
                     leadingIcon: "assets/icons/profile.svg",
@@ -262,9 +273,12 @@ class _AccountAgState extends State<AccountAg> {
                   ),
                 ]),
           ),
+
           SizedBox(
             height: 20,
           ),
+          
+          //more profile options
           Container(
             padding: const EdgeInsets.only(left: 15, right: 15),
             decoration: BoxDecoration(
@@ -306,6 +320,8 @@ class _AccountAgState extends State<AccountAg> {
           SizedBox(
             height: 20,
           ),
+          
+          //Log out
           loading == false
               ? Center(
                   child: CircularProgressIndicator(
@@ -343,7 +359,7 @@ class _AccountAgState extends State<AccountAg> {
     );
   }
 
-  Future<dynamic> pickPic() {
+  Future<dynamic> picture() {
     Size size = MediaQuery.of(context).size;
     return showModalBottomSheet(
       backgroundColor: Colors.grey.shade200,

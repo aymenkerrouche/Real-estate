@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:memoire/Services/Api.dart';
-import 'package:memoire/Services/user.dart';
+import 'package:memoire/Services/userController.dart';
+import 'package:memoire/models/offer.dart';
 import 'package:memoire/screens/map_page.dart';
 import 'package:memoire/screens/root_app.dart';
 import 'package:memoire/theme/color.dart';
 import 'package:memoire/utils/constant.dart';
 import 'package:memoire/widgets/input.dart';
 
-import '../../Services/offer.dart';
+import '../../Services/offerController.dart';
 
 class UpdateOffer extends StatefulWidget {
   const UpdateOffer({Key? key, required this.id}) : super(key: key);

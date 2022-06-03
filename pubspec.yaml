@@ -82,7 +82,6 @@ flutter:
     - assets/
     - assets/location.png
     - assets/icons/
-    - assets/icons/category/
     - assets/welcome/
     - assets/log/
 

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:memoire/Services/Api.dart';
-import 'package:memoire/Services/user.dart';
+import 'package:memoire/Services/userController.dart';
 import 'package:memoire/screens/Client/update_profil.dart';
 import 'package:memoire/screens/login/landing.dart';
 import 'package:memoire/theme/color.dart';
@@ -21,6 +21,7 @@ import 'package:memoire/widgets/setting_item.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../../models/user.dart';
 import 'favorite.dart';
 
 class AccountPage extends StatefulWidget {

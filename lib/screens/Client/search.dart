@@ -2,8 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:memoire/Services/Api.dart';
-import 'package:memoire/Services/offer.dart';
-import 'package:memoire/Services/user.dart';
+import 'package:memoire/Services/offerController.dart';
+import 'package:memoire/Services/userController.dart';
+import 'package:memoire/models/offer.dart';
 import 'package:memoire/screens/Client/Details.dart';
 import 'package:memoire/screens/map_page.dart';
 import 'package:memoire/theme/color.dart';

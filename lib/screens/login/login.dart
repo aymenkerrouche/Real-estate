@@ -1,7 +1,8 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, prefer_typing_uninitialized_variables, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:memoire/Services/Api.dart';
-import 'package:memoire/Services/user.dart';
+import 'package:memoire/Services/userController.dart';
+import 'package:memoire/models/user.dart';
 import 'package:memoire/utils/constant.dart';
 import 'package:memoire/utils/data.dart';
 import 'package:memoire/widgets/background_in.dart';

@@ -2,8 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:memoire/Services/Api.dart';
-import 'package:memoire/Services/offer.dart';
-import 'package:memoire/Services/user.dart';
+import 'package:memoire/Services/offerController.dart';
+import 'package:memoire/Services/userController.dart';
+import 'package:memoire/models/favorite.dart';
 import 'package:memoire/screens/Client/Details.dart';
 import 'package:memoire/theme/color.dart';
 import 'package:memoire/utils/constant.dart';

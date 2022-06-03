@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:memoire/Services/Api.dart';
-import 'package:memoire/Services/user.dart';
+import 'package:memoire/Services/userController.dart';
+import 'package:memoire/models/user.dart';
 import 'package:memoire/screens/root_app.dart';
 import 'package:memoire/utils/data.dart';
 import 'package:memoire/widgets/background_in.dart';

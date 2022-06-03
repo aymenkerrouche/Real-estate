@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously, avoid_function_literals_in_foreach_calls
 
 import 'package:flutter/material.dart';
+import 'package:memoire/models/favorite.dart';
 import 'package:memoire/screens/Admin/add_offer.dart';
 import 'package:memoire/screens/Admin/update_offer.dart';
 import 'package:memoire/theme/color.dart';
@@ -8,7 +9,7 @@ import 'package:memoire/utils/constant.dart';
 import 'package:memoire/widgets/property_item.dart';
 
 import '../../Services/Api.dart';
-import '../../Services/offer.dart';
+import '../../Services/offerController.dart';
 import '../Client/Details.dart';
 
 class AgencyOffers extends StatefulWidget {

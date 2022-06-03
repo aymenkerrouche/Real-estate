@@ -4,7 +4,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:memoire/Services/user.dart';
+import 'package:memoire/Services/userController.dart';
+import 'package:memoire/models/user.dart';
 import 'package:memoire/screens/map_page.dart';
 import 'package:memoire/screens/root_app.dart';
 import 'package:memoire/widgets/background_in.dart';
@@ -14,7 +15,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Services/Api.dart';
 import '../../theme/color.dart';
-import '../../utils/constant.dart';
 import '../../utils/data.dart';
 
 class Agency extends StatefulWidget {

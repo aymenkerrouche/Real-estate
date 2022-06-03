@@ -33,7 +33,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             },
             children: [
               Container(
-                color: orange.withOpacity(0.2),
+                color: white,
                 child: Stack(
                   children: [
                     Container(
@@ -48,7 +48,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     Align(
                       alignment: Alignment(0, 0.5),
                       child: Text(
-                        'WELCOME to Real Estate Property Management.\n App that operates an online marketplace for lodging ',
+                        'Welcome to Real Estate Property Management.\n App that operates an online marketplace for lodging ',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.w500, fontSize: 15),
@@ -59,7 +59,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ),
               Container(
-                color: pink.withOpacity(0.2),
+                color: white.withOpacity(0.15),
                 child: Stack(
                   children: [
                     Container(
@@ -85,7 +85,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ),
               Container(
-                color: yellow.withOpacity(0.2),
+                color: white.withOpacity(0.1),
                 child: Stack(
                   children: [
                     Container(

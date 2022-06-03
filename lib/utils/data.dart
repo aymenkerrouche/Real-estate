@@ -1,7 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, prefer_typing_uninitialized_variables, avoid_print
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:memoire/Services/user.dart';
+import 'package:memoire/models/user.dart';
 
 var logo = "logo.png";
 var profile = {
