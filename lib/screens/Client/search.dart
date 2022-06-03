@@ -39,10 +39,6 @@ class _SearchPageState extends State<SearchPage> {
         _postList = response.data as List<dynamic>;
         _loading = _loading ? !_loading : _loading;
       });
-    } else if (response.error == unauthorized) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(unauthorized),
-      ));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('${response.error}'),
@@ -90,7 +86,7 @@ class _SearchPageState extends State<SearchPage> {
                               child: getAppBar(),
                             ),
                             Container(
-                              child: listCategories(),
+                              child: listFilter(),
                             )
                           ],
                         ),
@@ -202,7 +198,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   int selectedCategory = -1;
-  listCategories() {
+  listFilter() {
     List<Widget> lists = List.generate(
         filter.length,
         (index) => Filter(
@@ -217,9 +213,17 @@ class _SearchPageState extends State<SearchPage> {
                       break;
                     case 3:
                       showModalBottomSheet(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(35),
+                                topRight: Radius.circular(35))),
                         enableDrag: false,
                         context: context,
-                        builder: (context) => MapPage(),
+                        builder: (context) => ClipRRect(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(35),
+                                topRight: Radius.circular(35)),
+                            child: MapPage()),
                       );
                       break;
                     default:

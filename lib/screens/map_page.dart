@@ -2,13 +2,11 @@
 
 import 'package:flutter/material.dart';
 
-
 import 'dart:async';
 import 'package:memoire/Services/location_services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:geocoding/geocoding.dart';
-
 
 class MapPage extends StatelessWidget {
   @override
@@ -19,10 +17,8 @@ class MapPage extends StatelessWidget {
   }
 }
 
-
-
 class MapScreen extends StatefulWidget {
-  static LatLng loc = LatLng(37.07979228395479, 3.049194072788338) ;
+  static LatLng loc = LatLng(37.07979228395479, 3.049194072788338);
   static var adrs;
   @override
   _MapScreenState createState() => _MapScreenState();
@@ -40,13 +36,12 @@ class _MapScreenState extends State<MapScreen> {
 
   Set<Marker> _markers = {};
 
-  String Address = 'Your Adrreess' ;
+  String Address = 'Your Adrreess';
   String Country = '';
   String Name = '';
   String City = '';
   String Street = '';
   String Thoroughfare = '';
-
 
   @override
   void initState() {
@@ -80,27 +75,38 @@ class _MapScreenState extends State<MapScreen> {
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: [ 
+        children: [
           FloatingActionButton(
             backgroundColor: Colors.black,
             onPressed: () => showModalBottomSheet(
               shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(30),),), 
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(30),
+                ),
+              ),
               context: context,
               builder: (context) => Container(
                 height: 200,
-                child: Center(child: Text(' Country : $Country \n City :  $City\n Street :  $Street\n ')),
+                child: Center(
+                    child: Text(
+                        ' Country : $Country \n City :  $City\n Street :  $Street\n ')),
               ),
             ),
-            child: Icon(Icons.info_outlined,),
-          ), 
-          SizedBox(height: 10,), 
+            child: Icon(
+              Icons.info_outlined,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
           FloatingActionButton(
             onPressed: () => _setMarker(currentLocation),
             backgroundColor: Colors.black,
             child: Icon(Icons.add_location_alt_outlined),
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           FloatingActionButton(
             onPressed: () => _getMyLocation(),
             backgroundColor: Colors.black,
@@ -117,24 +123,19 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  
-
-  void _setMarker(LatLng _location) {
+  void _setMarker(currentLocation) async {
+    await GetAddressFromLatLong(currentLocation);
+    MapScreen.loc = currentLocation;
+    print(currentLocation);
     Marker newMarker = Marker(
-      markerId: MarkerId(_location.toString()),
+      markerId: MarkerId(currentLocation.toString()),
       icon: BitmapDescriptor.defaultMarker,
-      position: _location,
-      infoWindow: InfoWindow(
-          title: Address,
-          snippet: "$City, $Country"),
+      position: currentLocation,
+      infoWindow: InfoWindow(title: "Address", snippet: MapScreen.adrs),
     );
     _markers.add(newMarker);
-    setState(() {
-      MapScreen.loc = _location;
-      GetAddressFromLatLong(_location);
-    });
   }
- 
+
   Future<void> _getMyLocation() async {
     LocationData _myLocation = await LocationService().getLocation();
     _animateCamera(LatLng(_myLocation.latitude!, _myLocation.longitude!));
@@ -148,22 +149,22 @@ class _MapScreenState extends State<MapScreen> {
       zoom: 16,
     );
     controller.animateCamera(CameraUpdate.newCameraPosition(_cameraPosition));
-    MapScreen.loc = _location; 
+    MapScreen.loc = _location;
   }
 
-  Future<void> GetAddressFromLatLong(currentLocation)async {
-    List<Placemark> placemarks = await placemarkFromCoordinates(currentLocation.latitude, currentLocation.longitude);
+  Future<void> GetAddressFromLatLong(currentLocation) async {
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+        currentLocation.latitude, currentLocation.longitude);
     // print(placemarks);
     Placemark place = placemarks[0];
-    setState(()  {
+    setState(() {
       Street = place.street!;
       Country = place.country!;
       City = place.administrativeArea!;
       Name = place.name!;
-      MapScreen.loc = currentLocation;
-      MapScreen.adrs = Street+' '+City+', '+Country ;
+      MapScreen.loc = currentLocation as LatLng;
+      MapScreen.adrs = Street + ' ' + City + ', ' + Country;
+      Address = MapScreen.adrs;
     });
   }
-
-  
 }

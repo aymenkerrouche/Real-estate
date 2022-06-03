@@ -178,7 +178,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               Container(
                                 width: size.width * 0.25,
                                 child: Text(
-                                  "${offer!.price} /m",
+                                  "${offer!.price} /year",
                                   style: TextStyle(
                                       fontSize: size.width * 0.045,
                                       fontWeight: FontWeight.w900,
@@ -437,11 +437,14 @@ class _ProductDetailsState extends State<ProductDetails> {
         equipements.length,
         (index) => Equip(
               data: equipements[index],
+              offer: offer,
             ));
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       padding: EdgeInsets.only(bottom: 5),
-      child: Row(children: lists),
+      child: Row(
+        children: lists,
+      ),
     );
   }
 

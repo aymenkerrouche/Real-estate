@@ -35,14 +35,6 @@ class _FavoritePageState extends State<FavoritePage> {
         lll = response.data as List<dynamic>;
         _loading = _loading ? !_loading : _loading;
       });
-    } else if (response.error == unauthorized) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(unauthorized),
-      ));
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('${response.error}'),
-      ));
     }
 
     lll.forEach((element) {
@@ -115,7 +107,7 @@ class _FavoritePageState extends State<FavoritePage> {
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.symmetric(
-          vertical: size.height * 0.02, horizontal: size.width * 0.04),
+            vertical: size.height * 0.02, horizontal: size.width * 0.04),
         child: listFavorite(),
       ),
     );

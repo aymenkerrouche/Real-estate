@@ -12,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'sign_up_ag.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({ Key? key }) : super(key: key);
+  const SignUp({Key? key}) : super(key: key);
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -26,7 +26,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    double tol = size.height / 4 ;
+    double tol = size.height / 4;
     return Scaffold(
       backgroundColor: Colors.black,
       body: Background(
@@ -37,124 +37,153 @@ class _SignUpState extends State<SignUp> {
             padding: EdgeInsets.all(5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(45),
-                topRight: Radius.circular(45)
-              ),
+                  topLeft: Radius.circular(45), topRight: Radius.circular(45)),
               color: Colors.white,
             ),
-            margin: EdgeInsets.only(top: size.height*0.3),
+            margin: EdgeInsets.only(top: size.height * 0.3),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                   //icon
-                   Padding(
-                     padding: const EdgeInsets.all(10.0),
-                     child: Row(
-                       children: [
-                         IconButton(
-                           icon: const Icon(Icons.arrow_back_rounded,size: 30.0),
-                           onPressed: () { Navigator.pop(context);},
-                         ),
-                         //titre
-                         Expanded(
-                           child: Text(
-                              'Create Account',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: size.height/25,
-                                color: const Color(0xff252427),
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                         ),
-                       ],
-                     ),
-                   ),
-
-                   //input
-                   Expanded(
-                     flex: 5,
-                     child: Column(
-                       crossAxisAlignment: CrossAxisAlignment.center,
-                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                       children: [
-                          Textfield('User name',child: TextFormField(
-                        onChanged: (value) { name = value;},
-                        decoration: InputDecoration(
-                            hintText: 'Aymen',
-                            border: InputBorder.none,
+              children: [
+                //icon
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.arrow_back_rounded, size: 30.0),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      //titre
+                      Expanded(
+                        child: Text(
+                          'Create Account',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: size.height / 25,
+                            color: const Color(0xff252427),
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                            ),
-                          Textfield('Email',child: TextFormField(
-                        onChanged: (value) { email = value;},
-                        decoration: InputDecoration(
+                    ],
+                  ),
+                ),
+
+                //input
+                Expanded(
+                  flex: 5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Textfield(
+                        'User name',
+                        child: TextFormField(
+                          onChanged: (value) {
+                            name = value;
+                          },
+                          decoration: InputDecoration(
+                            hintText: 'Enter your name',
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                      Textfield(
+                        'Email',
+                        child: TextFormField(
+                          onChanged: (value) {
+                            email = value;
+                          },
+                          decoration: InputDecoration(
                             hintText: 'example@example.com',
                             border: InputBorder.none,
-                            suffixIcon: Icon(Icons.email_outlined, color: Colors.black,),
+                            suffixIcon: Icon(
+                              Icons.email_outlined,
+                              color: Colors.black,
+                            ),
+                          ),
                         ),
                       ),
-                            ),
-                          mdps(headerText: "Password",child: TextFormField(
-                      obscureText: _visible,
-                      onChanged:  (value) { password = value;},
-                      decoration: InputDecoration(
-                          hintText: '********',
-                          border: InputBorder.none,
-                          suffixIcon: IconButton(
-                            padding: EdgeInsets.only(bottom: 5),
-                              icon: Icon(
-                                  _visible ? Icons.visibility : Icons.visibility_off, color: Colors.black,),
-                              onPressed: () {
-                                setState(() {
-                                  _visible = !_visible;
-                                });
-                              })),
-                    ),)
-                        ],
+                      mdps(
+                        headerText: "Password",
+                        child: TextFormField(
+                          obscureText: _visible,
+                          onChanged: (value) {
+                            password = value;
+                          },
+                          decoration: InputDecoration(
+                              hintText: '********',
+                              border: InputBorder.none,
+                              suffixIcon: IconButton(
+                                  padding: EdgeInsets.only(bottom: 5),
+                                  icon: Icon(
+                                    _visible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: Colors.black,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _visible = !_visible;
+                                    });
+                                  })),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                //switchButton
+                ToggleButton(
+                  title: 'accountType',
+                ),
+
+                //sign up button
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: size.width / 10),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(size.width, size.height / 13),
+                      primary: Colors.black,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(28)),
+                    ),
+                    onPressed: () {
+                      usertype = ToggleButton.togglevalue;
+                      if (usertype == 1) {
+                        _registerUser();
+                      } else if (usertype == 0) {
+                        profile["name"] = name;
+                        profile["email"] = email;
+                        pswrd = password;
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Agency(),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('please enter your infos')));
+                      }
+                    },
+                    child: Text(
+                      'Sign up',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 20,
+                        color: const Color(0xffffffff),
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                   //switchButton
-                   ToggleButton(
-                     title: 'accountType',
-                     
-                   ),
-                   
-                   //sign up button
-                   Container(
-                     margin: EdgeInsets.symmetric(horizontal: size.width/10),
-                     child: ElevatedButton(
-                       style: ElevatedButton.styleFrom(
-                         minimumSize: Size(size.width ,size.height/13),
-                         primary: Colors.black,
-                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
-                       ),
-                       onPressed: () { 
-                         usertype = ToggleButton.togglevalue ;
-                         if (usertype == 1) {
-                          _registerUser ();
-                         }else if(usertype == 0) {Navigator.push( context, MaterialPageRoute( builder: (context) => Agency(),),);}
-                         else{
-                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('please enter your infos')
-                          ));
-                         }
-                       },
-                       child:  Text('Sign up',
-                         style: TextStyle(
-                           fontFamily: 'Poppins',
-                           fontSize: 20,
-                           color: const Color(0xffffffff),
-                           fontWeight: FontWeight.w500,
-                         ),
-                       ),
-                     ),
-                   ),
-                  ],
-               ),
-           ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -166,21 +195,24 @@ class _SignUpState extends State<SignUp> {
     await pref.setInt('userId', user.id ?? 0);
   }
 
-    void _registerUser () async {
-    ApiResponse response = await register(name, email, password, usertype.toString());
-    if(response.error == null) {
+  void _registerUser() async {
+    ApiResponse response =
+        await register(name, email, password, usertype.toString());
+    if (response.error == null) {
       _saveAndRedirectToHome(response.data as User);
       user = response.data as User;
-      profile["name"]=user!.name!;
-      profile["email"]=user!.email!;
+      profile["name"] = user!.name!;
+      profile["email"] = user!.email!;
       if (usertype != 2) {
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>RootApp(usertype:  usertype )), (route) => false);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (context) => RootApp(usertype: usertype)),
+            (route) => false);
       }
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('${response.error}')));
+      print(response.error);
     }
-    else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('${response.error}')
-      ));
-    print(response.error);
-    }  
-}}
+  }
+}

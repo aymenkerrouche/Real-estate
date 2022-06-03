@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables, dead_code, library_private_types_in_public_api
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables, dead_code, library_private_types_in_public_api, use_build_context_synchronously
 
 import 'dart:async';
 
@@ -16,8 +16,6 @@ import 'package:memoire/widgets/icon_box.dart';
 import 'package:memoire/widgets/property_item.dart';
 import 'package:memoire/widgets/recent_item.dart';
 import 'package:memoire/widgets/recommend_item.dart';
-
-import '../../main.dart';
 import 'Details.dart';
 
 class HomePage extends StatefulWidget {
@@ -41,10 +39,6 @@ class _HomePageState extends State<HomePage> {
         _postList = response.data as List<dynamic>;
         _loading = _loading ? !_loading : _loading;
       });
-    } else if (response.error == unauthorized) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(unauthorized),
-      ));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('${response.error}'),
@@ -66,30 +60,36 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
+      color: primary,
       onRefresh: () {
         return popularOffers();
       },
-      child: Scaffold(
-          backgroundColor: appBgColor,
-          body: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                automaticallyImplyLeading: false,
-                backgroundColor: appBarColor,
-                pinned: true,
-                snap: true,
-                floating: true,
-                title: getAppBar(),
-                collapsedHeight: 65,
-              ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) => buildBody(),
-                  childCount: 1,
-                ),
-              )
-            ],
-          )),
+      child: _loading
+          ? Center(
+              child: CircularProgressIndicator(
+              color: primary,
+            ))
+          : Scaffold(
+              backgroundColor: appBgColor,
+              body: CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    automaticallyImplyLeading: false,
+                    backgroundColor: appBarColor,
+                    pinned: true,
+                    snap: true,
+                    floating: true,
+                    title: getAppBar(),
+                    collapsedHeight: 65,
+                  ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) => buildBody(),
+                      childCount: 1,
+                    ),
+                  )
+                ],
+              )),
     );
   }
 
@@ -161,9 +161,7 @@ class _HomePageState extends State<HomePage> {
                     radius: 10,
                     pad: 7,
                     onTap: () {
-                      setState(() {
-                        _startTimer();
-                      });
+                      setState(() {});
                     },
                     child: SvgPicture.asset(
                       'assets/icons/filter.svg',
@@ -252,8 +250,34 @@ class _HomePageState extends State<HomePage> {
           disableCenter: true,
           viewportFraction: .8,
         ),
-        items: List.generate(populars.length,
-            (index) => PropertyItem(data: popularoffers[index])));
+        items: List.generate(
+            populars.length,
+            (index) => PropertyItem(
+                  data: popularoffers[index],
+                  ontap: () {
+                    offer = popularoffers[index];
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProductDetails(
+                          id: offer.id!,
+                        ),
+                      ),
+                    );
+                  },
+                  onTap: () {
+                    offer = popularoffers[index];
+                    offerLikeDislike(offer.id!);
+                    switch (offer.selfLiked) {
+                      case true:
+                        offer.selfLiked = false;
+                        break;
+                      case false:
+                        offer.selfLiked = true;
+                        break;
+                    }
+                  },
+                )));
   }
 
   listWilaya() {
@@ -261,16 +285,7 @@ class _HomePageState extends State<HomePage> {
         wilaya.length,
         (index) => RecommendItem(
               data: wilaya[index],
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProductDetails(
-                      id: 1,
-                    ),
-                  ),
-                );
-              },
+              onTap: () {},
             ));
 
     return SingleChildScrollView(
@@ -311,28 +326,15 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _startTimer() {
-    Timer(const Duration(seconds: 1), () {
-      setState(() {
-        user!.email = '';
-        user!.name = '';
-        user!.id = 0;
-        user!.image = '';
-        user!.token = '';
-        user!.image = '';
-        user!.usertype = 2;
-        usertype = 2;
-        imageURL = 'http://192.168.230.38/first/storage/app/${user!.image!}';
-        profile = {
-          "name": "user",
-          "image":
-              "https://img.icons8.com/fluency/240/000000/user-male-circle.png",
-          "email": "",
-        };
-        logout();
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => MyApp()), (route) => false);
-      });
-    });
+  // Offer like dislik
+  void offerLikeDislike(int id) async {
+    ApiResponse response = await likeUnlikeOffer(id);
+    if (response.error == null) {
+      popularOffers();
+    } else if (response.error == unauthorized) {
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('${response.error}')));
+    }
   }
 }

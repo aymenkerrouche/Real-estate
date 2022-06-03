@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:memoire/screens/map_page.dart';
 import 'package:memoire/utils/constant.dart';
 import 'package:memoire/utils/data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -96,6 +97,7 @@ Future<ApiResponse> register(
 Future<bool> logout() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
   user = null;
+  MapScreen.adrs = null;
   return await pref.clear();
 }
 

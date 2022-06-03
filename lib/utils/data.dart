@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names, prefer_typing_uninitialized_variables, avoid_print
 
-import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:memoire/Services/user.dart';
 
@@ -12,6 +11,7 @@ var profile = {
 };
 int usertype = 2;
 User? user;
+var pswrd;
 
 List categories = [
   {"name": "All", "icon": FontAwesomeIcons.boxes},
@@ -144,11 +144,12 @@ List equipements = [
     "icon": FontAwesomeIcons.bed,
   },
   {"name": "Bath", "icon": FontAwesomeIcons.bath},
-  {"name": "Wifi", "icon": FontAwesomeIcons.wifi},
+  {"name": "Room", "icon": FontAwesomeIcons.personBooth},
+  {"name": "Visitors", "icon": FontAwesomeIcons.solidUser},
+  {"name": "  Wifi", "icon": FontAwesomeIcons.wifi},
   {"name": "Water", "icon": FontAwesomeIcons.faucet},
   {"name": "Gaz", "icon": FontAwesomeIcons.fire},
   {"name": "Clim", "icon": FontAwesomeIcons.snowflake},
-  {"name": "TV", "icon": FontAwesomeIcons.tv},
-  {"name": "Pool", "icon": FontAwesomeIcons.swimmingPool},
-  {"name": "Building", "icon": FontAwesomeIcons.building},
+  {"name": "  TV", "icon": FontAwesomeIcons.tv},
+  {"name": "  Pool", "icon": FontAwesomeIcons.swimmingPool},
 ];

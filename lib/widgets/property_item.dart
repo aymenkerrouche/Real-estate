@@ -116,7 +116,7 @@ class _PropertyItemState extends State<PropertyItem> {
                           width: 3,
                         ),
                         SizedBox(
-                          width: size.width * 0.6,
+                          width: size.width * 0.55,
                           child: Text(
                             widget.data.location.toString(),
                             style: TextStyle(fontSize: 13, color: darker),
@@ -130,121 +130,6 @@ class _PropertyItemState extends State<PropertyItem> {
                 )),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class Popular extends StatefulWidget {
-  const Popular(
-      {Key? key, required this.data, this.height = 150.0, this.marg = 20.0})
-      : super(key: key);
-  final data;
-  final height;
-  final marg;
-  @override
-  State<Popular> createState() => _PopularState();
-}
-
-class _PopularState extends State<Popular> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 210,
-      margin: EdgeInsets.fromLTRB(0, 0, 0, widget.marg),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(25),
-        boxShadow: [
-          BoxShadow(
-            color: shadowColor.withOpacity(0.1),
-            spreadRadius: .5,
-            blurRadius: 1,
-            offset: Offset(0, 1), // changes position of shadow
-          ),
-        ],
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            bottom: 15,
-            right: 15,
-            child: Text(
-              widget.data["price"],
-              style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.green[700],
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 1),
-            ),
-          ),
-          CustomImage(
-            widget.data["image"],
-            radius: 25,
-            width: double.infinity,
-            height: widget.height,
-          ),
-          Positioned(
-              right: 20,
-              top: widget.height - 20,
-              child: IconBox(
-                  bgColor: cardColor,
-                  pad: 3,
-                  onTap: () {
-                    switch (widget.data["is_favorited"]) {
-                      case true:
-                        widget.data["is_favorited"] = false;
-                        break;
-                      default:
-                        widget.data["is_favorited"] = true;
-                    }
-                    setState(() {});
-                  },
-                  child: Icon(
-                    widget.data["is_favorited"]
-                        ? Icons.favorite
-                        : Icons.favorite_border,
-                    color: actionColor,
-                    size: 30,
-                  ))),
-          Positioned(
-              left: 15,
-              top: widget.height + 15,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.data["name"],
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 0.2),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.place_outlined,
-                        color: darker,
-                        size: 13,
-                      ),
-                      SizedBox(
-                        width: 3,
-                      ),
-                      Text(
-                        widget.data["location"],
-                        style: TextStyle(fontSize: 13, color: darker),
-                      ),
-                    ],
-                  ),
-                ],
-              )),
-        ],
       ),
     );
   }
@@ -395,7 +280,7 @@ class _EditOfferState extends State<EditOffer> {
               ),
             ),
             CustomImage(
-              widget.data.image.toString(),
+              '$urlImages/first/storage/app/${widget.data.image.toString()}',
               radius: 25,
               width: double.infinity,
               height: widget.height,

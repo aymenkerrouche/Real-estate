@@ -21,6 +21,8 @@ import 'package:memoire/widgets/setting_item.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import 'favorite.dart';
+
 class AccountPage extends StatefulWidget {
   const AccountPage({Key? key}) : super(key: key);
 
@@ -77,7 +79,6 @@ class _AccountPageState extends State<AccountPage> {
     } on PlatformException catch (e) {
       print('failed : $e');
     }
-    print(image);
   }
 
   @override
@@ -220,7 +221,14 @@ class _AccountPageState extends State<AccountPage> {
                     title: "Favorites",
                     leadingIcon: "assets/icons/bookmark.svg",
                     bgIconColor: primary,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FavoritePage(),
+                        ),
+                      );
+                    },
                   ),
                 ]),
           ),
@@ -349,7 +357,10 @@ class _AccountPageState extends State<AccountPage> {
             color: cardColor,
           ),
           ListTile(
-            leading: Icon(Icons.delete_outline_outlined),
+            leading: Icon(
+              Icons.delete,
+              color: primary,
+            ),
             title: Text('Delete'),
             onTap: () {
               setState(() {

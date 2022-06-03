@@ -20,7 +20,7 @@ class User {
   // function to convert json data to user model
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-        id: json['user']['id'],
+        id: json['user_id'],
         name: json['user']['name'],
         email: json['user']['email'],
         image: json['user']['image'],
@@ -111,4 +111,23 @@ Future<ApiResponse> deleteImage() async {
     apiResponse.error = serverError;
   }
   return apiResponse;
+}
+
+registerImage(filepath, id, location, lat, long, phone) async {
+  var fullUrl = '$url/signup';
+  String token = await getToken();
+  Map<String, String> headers = {
+    'Content-Type': 'multipart/form-data',
+    'Accept': 'application/json',
+    'Authorization': 'Bearer $token'
+  };
+  var request = http.MultipartRequest('POST', Uri.parse(fullUrl))
+    ..headers.addAll(headers)
+    ..fields['location'] = location.toString()
+    ..fields['agency_id'] = id.toString()
+    ..fields['latitude'] = lat.toString()
+    ..fields['longitude'] = long.toString()
+    ..fields['phone'] = phone.toString()
+    ..files.add(await http.MultipartFile.fromPath('image', filepath));
+  return await request.send();
 }
