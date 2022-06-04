@@ -92,7 +92,10 @@ class _ProductDetailsState extends State<ProductDetails> {
       },
       child: Scaffold(
         body: _loading
-            ? Center(child: CircularProgressIndicator())
+            ? Center(
+                child: CircularProgressIndicator(
+                color: primary,
+              ))
             : SafeArea(
                 child: ListView(
                   children: <Widget>[

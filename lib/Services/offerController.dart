@@ -505,3 +505,27 @@ Future<ApiResponse> getOffersByPrice(min, max) async {
 
   return apiResponse;
 }
+
+//Search by Price
+Future<ApiResponse> getOffersOnMap() async {
+  ApiResponse apiResponse = ApiResponse();
+  String token = await getToken();
+  final response = await http.get(Uri.parse('$url/offer/list/map'), headers: {
+    'Accept': 'application/json',
+    'Authorization': 'Bearer $token'
+  });
+
+  switch (response.statusCode) {
+    case 200:
+      apiResponse.data = jsonDecode(response.body);
+      apiResponse.data as List<dynamic>;
+      break;
+    case 401:
+      apiResponse.error = unauthorized;
+      break;
+    default:
+      apiResponse.error = somethingWentWrong;
+      break;
+  }
+  return apiResponse;
+}

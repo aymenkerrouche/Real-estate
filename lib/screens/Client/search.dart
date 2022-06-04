@@ -17,6 +17,8 @@ import 'package:memoire/widgets/icon_box.dart';
 import 'package:memoire/widgets/property_item.dart';
 import 'package:memoire/widgets/recent_item.dart';
 
+import 'liste_offers_map.dart';
+
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
 
@@ -199,6 +201,7 @@ class _SearchPageState extends State<SearchPage> {
 
   int selectedCategory = -1;
   listFilter() {
+    Size size = MediaQuery.of(context).size;
     List<Widget> lists = List.generate(
         filter.length,
         (index) => Filter(
@@ -213,18 +216,22 @@ class _SearchPageState extends State<SearchPage> {
                       break;
                     case 3:
                       showModalBottomSheet(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(35),
-                                topRight: Radius.circular(35))),
-                        enableDrag: false,
-                        context: context,
-                        builder: (context) => ClipRRect(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(35),
-                                topRight: Radius.circular(35)),
-                            child: MapPage()),
-                      );
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(35),
+                                  topRight: Radius.circular(35))),
+                          enableDrag: false,
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => Container(
+                                height: size.height * 0.8,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(35),
+                                      topRight: Radius.circular(35)),
+                                  child: ListMap(),
+                                ),
+                              ));
                       break;
                     default:
                   }
