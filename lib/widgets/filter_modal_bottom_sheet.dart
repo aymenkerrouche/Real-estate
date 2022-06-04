@@ -1,17 +1,23 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, avoid_unnecessary_containers, avoid_print, prefer_const_literals_to_create_immutables, deprecated_member_use
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, avoid_unnecessary_containers, avoid_print, prefer_const_literals_to_create_immutables, deprecated_member_use, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:memoire/theme/color.dart';
 import 'package:memoire/widgets/filter_list.dart';
 
-class FilterModalBottomSheet extends StatelessWidget {
-  void close(context) {
-    if (Navigator.canPop(context)) {
-      Navigator.pop(context);
-    }
-  }
+class FilterPrice extends StatefulWidget {
+  FilterPrice({Key? key, required this.child, required this.onTap})
+      : super(key: key);
 
+  static int min = -1;
+  static int max = -1;
+  Widget child;
+  Widget onTap;
+
+  @override
+  State<FilterPrice> createState() => _FilterPriceState();
+}
+
+class _FilterPriceState extends State<FilterPrice> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -25,16 +31,7 @@ class FilterModalBottomSheet extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  width: 100,
-                  alignment: Alignment.centerLeft,
-                  child: InkWell(
-                    child: Icon(Icons.settings_backup_restore_outlined,color: cardColor,),
-                    onTap: () {
-                      close(context);
-                    },
-                  ),
-                ),
+                widget.onTap,
                 Text(
                   'Price',
                   textAlign: TextAlign.center,
@@ -46,7 +43,7 @@ class FilterModalBottomSheet extends StatelessWidget {
                   child: InkWell(
                     child: Icon(Icons.close),
                     onTap: () {
-                      close(context);
+                      Navigator.pop(context);
                     },
                   ),
                 )
@@ -76,6 +73,9 @@ class FilterModalBottomSheet extends StatelessWidget {
                       ),
                     ),
                     child: TextField(
+                      onChanged: (value) {
+                        FilterPrice.min = int.parse(value);
+                      },
                       textAlign: TextAlign.center,
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -101,6 +101,9 @@ class FilterModalBottomSheet extends StatelessWidget {
                       ),
                     ),
                     child: TextField(
+                      onChanged: (value) {
+                        FilterPrice.max = int.parse(value);
+                      },
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -124,25 +127,10 @@ class FilterModalBottomSheet extends StatelessWidget {
             Container(
               child: FilterList(onSelect: (selected) => print(selected)),
             ),
-            
             Container(
-              width: size.width ,
-              margin: EdgeInsets.symmetric(vertical: 20),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(size.width * 0.8,50),
-                   shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                primary: Colors.black,
-                padding: EdgeInsets.all(20),
-                ),
-                child: Text('Apply Filter', style: TextStyle(fontSize: 16)),
-                onPressed: () {
-                  close(context);
-                },
-              ),
-            )
+                width: size.width,
+                margin: EdgeInsets.symmetric(vertical: 20),
+                child: widget.child)
           ],
         ),
       ),

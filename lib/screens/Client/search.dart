@@ -32,7 +32,6 @@ class _SearchPageState extends State<SearchPage> {
   List offers = [];
 
   Future<void> retrieveOffers() async {
-    userId = await getUserId();
     ApiResponse response = await getOffers();
     offers.clear();
     if (response.error == null) {
@@ -251,7 +250,47 @@ class _SearchPageState extends State<SearchPage> {
         ),
         context: context,
         builder: (BuildContext bc) {
-          return FilterModalBottomSheet();
+          var size = MediaQuery.of(context).size;
+          return FilterPrice(
+            onTap: GestureDetector(
+              child: Container(
+                width: 100,
+                alignment: Alignment.centerLeft,
+                child: InkWell(
+                  child: Icon(
+                    Icons.settings_backup_restore_outlined,
+                    color: primary,
+                  ),
+                  onTap: () {
+                    retrieveOffers();
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            ),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(size.width * 0.8, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                primary: Colors.black,
+                padding: EdgeInsets.all(20),
+              ),
+              child: Text('Apply Filter', style: TextStyle(fontSize: 16)),
+              onPressed: () {
+                if (FilterPrice.max == -1 && FilterPrice.min == -1) {
+                  retrieveOffers();
+                  Navigator.pop(context);
+                } else {
+                  priceOffers();
+                  Navigator.pop(context);
+                  FilterPrice.max = -1;
+                  FilterPrice.min = -1;
+                }
+              },
+            ),
+          );
         });
   }
 
@@ -266,6 +305,27 @@ class _SearchPageState extends State<SearchPage> {
     } else {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('${response.error}')));
+    }
+  }
+
+  Future<void> priceOffers() async {
+    ApiResponse response =
+        await getOffersByPrice(FilterPrice.min, FilterPrice.max);
+    offers.clear();
+    if (response.error == null) {
+      setState(() {
+        _postList = response.data as List<dynamic>;
+        _loading = _loading ? !_loading : _loading;
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('${response.error}'),
+      ));
+    }
+    offers.clear();
+    for (int i = 0; i < _postList.length; i++) {
+      offer = Offer.fromJson(_postList[i]);
+      offers.add(offer);
     }
   }
 }

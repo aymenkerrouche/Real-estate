@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:memoire/Services/Api.dart';
 import 'package:memoire/Services/offerController.dart';
 import 'package:memoire/models/offer.dart';
+import 'package:memoire/screens/Client/search_wilaya.dart';
 import 'package:memoire/theme/color.dart';
 import 'package:memoire/utils/constant.dart';
 import 'package:memoire/utils/data.dart';
@@ -252,7 +253,7 @@ class _HomePageState extends State<HomePage> {
           viewportFraction: .8,
         ),
         items: List.generate(
-            populars.length,
+            popularoffers.length,
             (index) => PropertyItem(
                   data: popularoffers[index],
                   ontap: () {
@@ -286,7 +287,16 @@ class _HomePageState extends State<HomePage> {
         wilaya.length,
         (index) => RecommendItem(
               data: wilaya[index],
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SearchWilaya(
+                      data: wilaya[index]["name"],
+                    ),
+                  ),
+                );
+              },
             ));
 
     return SingleChildScrollView(
@@ -318,6 +328,15 @@ class _HomePageState extends State<HomePage> {
                 setState(() {
                   selectedCategory = index;
                 });
+                Timer(const Duration(milliseconds: 1100), () {
+                  setState(() {
+                    selectedCategory = 0;
+                  });
+                });
+
+                if (categories[index]["name"] != "All") {
+                  _startTimer(index);
+                }
               },
             ));
     return SingleChildScrollView(
@@ -337,5 +356,18 @@ class _HomePageState extends State<HomePage> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('${response.error}')));
     }
+  }
+
+  void _startTimer(index) {
+    Timer(const Duration(milliseconds: 1100), () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SearchWilaya(
+            data: categories[index]["name"],
+          ),
+        ),
+      );
+    });
   }
 }

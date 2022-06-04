@@ -7,9 +7,6 @@ import 'userController.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-
-
-
 // get all Offers
 Future<ApiResponse> getOffers() async {
   ApiResponse apiResponse = ApiResponse();
@@ -307,7 +304,6 @@ Future<ApiResponse> getFavorites() async {
   switch (response.statusCode) {
     case 200:
       apiResponse.data = jsonDecode(response.body);
-      print(200);
       break;
     case 401:
       apiResponse.error = unauthorized;
@@ -320,7 +316,7 @@ Future<ApiResponse> getFavorites() async {
   return apiResponse;
 }
 
-//Post Offer images
+//upload Offer images
 offerImage(List images, offer_id) async {
   var fullUrl = '$url/photo';
   String token = await getToken();
@@ -439,6 +435,65 @@ Future<ApiResponse> getImages(int id) async {
       apiResponse.data = jsonDecode(response.body);
       apiResponse.data as List;
       print(apiResponse.data);
+      break;
+    case 401:
+      apiResponse.error = unauthorized;
+      break;
+    default:
+      apiResponse.error = somethingWentWrong;
+      break;
+  }
+
+  return apiResponse;
+}
+
+//Search by Data
+Future<ApiResponse> getOffersByData(data) async {
+  ApiResponse apiResponse = ApiResponse();
+
+  String token = await getToken();
+
+  final response = await http.get(Uri.parse('$url/offer/search/$data'),
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      });
+
+  switch (response.statusCode) {
+    case 200:
+      apiResponse.data = jsonDecode(response.body)['offers'];
+      break;
+    case 401:
+      apiResponse.error = unauthorized;
+      break;
+    default:
+      apiResponse.error = somethingWentWrong;
+      break;
+  }
+
+  return apiResponse;
+}
+
+//Search by Price
+Future<ApiResponse> getOffersByPrice(min, max) async {
+  ApiResponse apiResponse = ApiResponse();
+
+  String token = await getToken();
+  if (min == 0) {
+    min = -1;
+  }
+  if (max == 0) {
+    max = -1;
+  }
+  final response = await http.get(Uri.parse('$url/offer/search/$min/$max'),
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      });
+
+  switch (response.statusCode) {
+    case 200:
+      apiResponse.data = jsonDecode(response.body)['offers'];
       break;
     case 401:
       apiResponse.error = unauthorized;

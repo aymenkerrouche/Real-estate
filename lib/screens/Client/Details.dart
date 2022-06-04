@@ -193,6 +193,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                             ],
                           ),
 
+                          Text(
+                            "${offer!.logement_type}",
+                            style: TextStyle(
+                                fontSize: size.width * 0.045,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.grey.shade600),
+                            textAlign: TextAlign.right,
+                          ),
+
                           //Rating
                           Padding(
                             padding: EdgeInsets.only(bottom: 5.0, top: 2.0),

@@ -20,7 +20,7 @@ class CategoryItem extends StatelessWidget {
         curve: Curves.fastOutSlowIn,
         padding: EdgeInsets.fromLTRB(5, 20, 5, 0),
         margin: EdgeInsets.only(right: 10),
-        width: 80,
+        constraints: BoxConstraints(minWidth: 80, minHeight: 85),
         height: 80,
         decoration: BoxDecoration(
           color: selected ? primary : cardColor,

@@ -16,9 +16,9 @@ var pswrd;
 List categories = [
   {"name": "All", "icon": FontAwesomeIcons.boxes},
   {"name": "Villa", "icon": FontAwesomeIcons.university},
-  {"name": "House", "icon": FontAwesomeIcons.home},
-  {"name": "Shop", "icon": FontAwesomeIcons.storeAlt},
-  {"name": "Building", "icon": FontAwesomeIcons.building},
+  {"name": "Apparetemnt", "icon": FontAwesomeIcons.home},
+  {"name": "Garage", "icon": FontAwesomeIcons.storeAlt},
+  {"name": "Studio", "icon": FontAwesomeIcons.building},
 ];
 
 List filter = [
@@ -39,40 +39,6 @@ List filter = [
   },
 ];
 
-List populars = [
-  {
-    "image":
-        "https://2.bp.blogspot.com/-k4Hb8w4Bvt4/W4WDedMYoyI/AAAAAAAAqX4/upV1rxtP44c8OcqXdjh3paQ1Keb4xNOoACLcBGAs/s1600/constantine.jpg",
-    "name": "Twin Castle",
-    "price": "\$ 175k",
-    "location": "Oran, Algeria",
-    "is_favorited": false,
-  },
-  {
-    "image":
-        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NHx8Zm9vZHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
-    "name": "Single Villa",
-    "price": "\$ 280k",
-    "location": "Alger, Algeria",
-    "is_favorited": true,
-  },
-  {
-    "image":
-        "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NHx8Zm9vZHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
-    "name": "Convertible Studio",
-    "price": "\$ 150k",
-    "location": "Constantine, Algeria",
-    "is_favorited": false,
-  },
-  {
-    "image":
-        "https://images.unsplash.com/photo-1580494767366-82f4e74f5655?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-    "name": "Twin Villa",
-    "price": "\$ 120k",
-    "location": "Skikda, Algeria",
-    "is_favorited": false,
-  },
-];
 
 List wilaya = [
   {
