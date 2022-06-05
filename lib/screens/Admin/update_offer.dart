@@ -503,7 +503,7 @@ class _UpdateOfferState extends State<UpdateOffer> {
     if (response.statusCode == 200) {
       ApiResponse offer_id = await getOfferID();
       if (offer_id.error == null) {
-        offerImage(Images.listPath, offer_id.data);
+        postOfferImage(Images.listPath, offer_id.data);
         showMsg('Offer Created Successfully');
         Navigator.pushAndRemoveUntil(
           context,

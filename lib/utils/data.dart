@@ -23,22 +23,21 @@ List categories = [
 
 List filter = [
   {
-    "name": "Prix",
+    "name": "Price",
   },
   {
-    "name": "Type de logement",
+    "name": "Location",
   },
   {
-    "name": "Equipements",
+    "name": "Rent",
   },
   {
-    "name": "Localisation",
+    "name": "Buy",
   },
   {
-    "name": "Agence",
+    "name": "Vacation",
   },
 ];
-
 
 List wilaya = [
   {
@@ -55,6 +54,11 @@ List wilaya = [
     "image":
         "https://i.pinimg.com/564x/71/ee/33/71ee33b80632aa4ee5e2debd77b252aa.jpg",
     "name": "Oran",
+  },
+  {
+    "image":
+        "https://pbs.twimg.com/media/D3VKERZW4AAW5_3?format=jpg&name=900x900",
+    "name": "Annaba",
   },
 ];
 
@@ -118,4 +122,7 @@ List equipements = [
   {"name": "Clim", "icon": FontAwesomeIcons.snowflake},
   {"name": "  TV", "icon": FontAwesomeIcons.tv},
   {"name": "  Pool", "icon": FontAwesomeIcons.swimmingPool},
+  {"name": " Furnitured", "icon": FontAwesomeIcons.couch},
+  {"name": "  Park", "icon": FontAwesomeIcons.parking},
+  {"name": "  Cam", "icon": FontAwesomeIcons.camera},
 ];

@@ -151,7 +151,7 @@ class _LoginState extends State<Login> {
     );
   }
 
-  void _saveAndRedirectToHome(User user) async {
+  void _saveUserToken(User user) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString('token', user.token ?? '');
     await pref.setInt('userId', user.id ?? 0);
@@ -160,7 +160,7 @@ class _LoginState extends State<Login> {
   void _loginUser() async {
     ApiResponse response = await login(email, password);
     if (response.error == null) {
-      _saveAndRedirectToHome(response.data as User);
+      _saveUserToken(response.data as User);
       getUser();
     } else {
       ScaffoldMessenger.of(context)

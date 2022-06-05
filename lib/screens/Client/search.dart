@@ -32,6 +32,9 @@ class _SearchPageState extends State<SearchPage> {
   bool _loading = true;
   late Offer offer;
   List offers = [];
+  List<dynamic> lll = [];
+  var search;
+  bool ifEmpty = false;
 
   Future<void> retrieveOffers() async {
     ApiResponse response = await getOffers();
@@ -51,6 +54,24 @@ class _SearchPageState extends State<SearchPage> {
       offer = Offer.fromJson(_postList[i]);
       offers.add(offer);
     }
+    offers.isEmpty ? ifEmpty = true : ifEmpty = false;
+  }
+
+  Future viewOffers(data) async {
+    offers.clear();
+    lll.clear();
+    ApiResponse response = await getOffersByData(data);
+    if (response.error == null) {
+      setState(() {
+        lll = response.data as List<dynamic>;
+        _loading = _loading ? !_loading : _loading;
+      });
+    }
+    lll.forEach((element) {
+      offer = Offer.fromJson(element);
+      offers.add(offer);
+    });
+    offers.isEmpty ? ifEmpty = true : ifEmpty = false;
   }
 
   @override
@@ -65,43 +86,66 @@ class _SearchPageState extends State<SearchPage> {
     return SafeArea(
       child: RefreshIndicator(
         onRefresh: () {
+          selectedCategory = -1;
           return retrieveOffers();
         },
-        child: Scaffold(
-            backgroundColor: background,
-            body: CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                    automaticallyImplyLeading: false,
-                    backgroundColor: appBarColor,
-                    pinned: false,
-                    floating: true,
-                    snap: true,
-                    expandedHeight: size.width * 0.32,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Column(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 10),
-                              child: getAppBar(),
-                            ),
-                            Container(
-                              child: listFilter(),
-                            )
-                          ],
+        child: GestureDetector(
+          onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: Scaffold(
+              backgroundColor: background,
+              body: CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                      automaticallyImplyLeading: false,
+                      backgroundColor: appBarColor,
+                      pinned: false,
+                      floating: true,
+                      snap: true,
+                      expandedHeight: size.width * 0.32,
+                      flexibleSpace: FlexibleSpaceBar(
+                        background: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Column(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 10),
+                                child: getAppBar(),
+                              ),
+                              Container(
+                                child: listFilter(),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    )),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) => buildBody(),
-                    childCount: 1,
-                  ),
-                )
-              ],
-            )),
+                      )),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) => ifEmpty
+                          ? Container(
+                              margin: EdgeInsets.only(top: size.height * 0.1),
+                              width: size.width,
+                              alignment: Alignment.center,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Image.asset("assets/404.png"),
+                                  Text(
+                                    "There are no offers",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : buildBody(),
+                      childCount: 1,
+                    ),
+                  )
+                ],
+              )),
+        ),
       ),
     );
   }
@@ -123,6 +167,13 @@ class _SearchPageState extends State<SearchPage> {
         Expanded(
             child: CustomTextBox(
           hint: "Search",
+          onChanged: (value) {
+            search = value;
+          },
+          onEditingComplete: () {
+            viewOffers(search)
+                .then((value) => FocusManager.instance.primaryFocus?.unfocus());
+          },
           prefix: SvgPicture.asset(
             'assets/icons/search.svg',
             color: inActiveColor,
@@ -214,7 +265,7 @@ class _SearchPageState extends State<SearchPage> {
                     case 0:
                       _settingModalBottomSheet(context);
                       break;
-                    case 3:
+                    case 1:
                       showModalBottomSheet(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.only(
@@ -232,6 +283,15 @@ class _SearchPageState extends State<SearchPage> {
                                   child: ListMap(),
                                 ),
                               ));
+                      break;
+                    case 2:
+                      viewOffers('Rent');
+                      break;
+                    case 3:
+                      viewOffers('Sell');
+                      break;
+                    case 4:
+                      viewOffers('Vacation');
                       break;
                     default:
                   }
@@ -334,5 +394,63 @@ class _SearchPageState extends State<SearchPage> {
       offer = Offer.fromJson(_postList[i]);
       offers.add(offer);
     }
+  }
+
+  Future<dynamic> logement() {
+    Size size = MediaQuery.of(context).size;
+    return showModalBottomSheet(
+      backgroundColor: Colors.grey.shade200,
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(30),
+        ),
+      ),
+      isScrollControlled: true,
+      builder: (context) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 3),
+            width: size.width * 0.1,
+            height: 4,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50), color: mainColor),
+          ),
+          ListTile(
+              leading: Icon(
+                Icons.camera_alt,
+                color: primary,
+              ),
+              title: Text('Camera', style: TextStyle(color: primary)),
+              onTap: () {}),
+          Divider(
+            height: 15,
+            color: cardColor,
+          ),
+          ListTile(
+              leading: Icon(
+                Icons.image,
+                color: primary,
+              ),
+              title: Text('Gallery', style: TextStyle(color: primary)),
+              onTap: () {}),
+          Divider(
+            height: 15,
+            color: cardColor,
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.delete,
+              color: primary,
+            ),
+            title: Text('Delete'),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

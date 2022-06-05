@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage> {
   bool _loading = true;
   late Offer offer;
   List popularoffers = [];
+  bool ifEmpty = false;
 
   Future<void> popularOffers() async {
     ApiResponse response = await getPopular();
@@ -51,6 +52,7 @@ class _HomePageState extends State<HomePage> {
       offer = Offer.fromJson(_postList[i]);
       popularoffers.add(offer);
     }
+    popularoffers.isEmpty ? ifEmpty = true : ifEmpty = false;
   }
 
   @override
@@ -245,41 +247,59 @@ class _HomePageState extends State<HomePage> {
   }
 
   listPopulars() {
-    return CarouselSlider(
-        options: CarouselOptions(
-          height: 240,
-          enlargeCenterPage: true,
-          disableCenter: true,
-          viewportFraction: .8,
-        ),
-        items: List.generate(
-            popularoffers.length,
-            (index) => PropertyItem(
-                  data: popularoffers[index],
-                  ontap: () {
-                    offer = popularoffers[index];
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ProductDetails(
-                          id: offer.id!,
-                        ),
-                      ),
-                    );
-                  },
-                  onTap: () {
-                    offer = popularoffers[index];
-                    offerLikeDislike(offer.id!);
-                    switch (offer.selfLiked) {
-                      case true:
-                        offer.selfLiked = false;
-                        break;
-                      case false:
-                        offer.selfLiked = true;
-                        break;
-                    }
-                  },
-                )));
+    Size size = MediaQuery.of(context).size;
+    return ifEmpty
+        ? Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: size.width,
+                height: 200,
+                child: Image.asset(
+                  "assets/404.png",
+                ),
+              ),
+              Text(
+                "There are no offers yet",
+                style: TextStyle(fontSize: 20),
+              ),
+            ],
+          )
+        : CarouselSlider(
+            options: CarouselOptions(
+              height: 240,
+              enlargeCenterPage: true,
+              disableCenter: true,
+              viewportFraction: .8,
+            ),
+            items: List.generate(
+                popularoffers.length,
+                (index) => PropertyItem(
+                      data: popularoffers[index],
+                      ontap: () {
+                        offer = popularoffers[index];
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProductDetails(
+                              id: offer.id!,
+                            ),
+                          ),
+                        );
+                      },
+                      onTap: () {
+                        offer = popularoffers[index];
+                        offerLikeDislike(offer.id!);
+                        switch (offer.selfLiked) {
+                          case true:
+                            offer.selfLiked = false;
+                            break;
+                          case false:
+                            offer.selfLiked = true;
+                            break;
+                        }
+                      },
+                    )));
   }
 
   listWilaya() {

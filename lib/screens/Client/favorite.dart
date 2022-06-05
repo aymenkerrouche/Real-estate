@@ -23,6 +23,7 @@ class _FavoritePageState extends State<FavoritePage> {
   bool _loading = true;
   late Favorite offer;
   List offers = [];
+  bool ifEmpty = false;
 
   Future viewOffers() async {
     offers.clear();
@@ -42,6 +43,7 @@ class _FavoritePageState extends State<FavoritePage> {
       offer = Favorite.fromJson(element);
       offers.add(offer);
     });
+    offers.isEmpty ? ifEmpty = true : ifEmpty = false;
   }
 
   @override
@@ -52,6 +54,7 @@ class _FavoritePageState extends State<FavoritePage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return RefreshIndicator(
       onRefresh: () {
         return viewOffers();
@@ -70,7 +73,23 @@ class _FavoritePageState extends State<FavoritePage> {
               ),
               SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  (context, index) => buildBody(),
+                  (context, index) => ifEmpty
+                      ? Container(
+                          margin: EdgeInsets.only(top: size.height * 0.1),
+                          width: size.width,
+                          alignment: Alignment.center,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Image.asset("assets/404.png"),
+                              Text(
+                                "There are no offers",
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ],
+                          ),
+                        )
+                      : buildBody(),
                   childCount: 1,
                 ),
               )

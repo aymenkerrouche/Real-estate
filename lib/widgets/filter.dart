@@ -4,21 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:memoire/theme/color.dart';
 
 class Filter extends StatelessWidget {
-  Filter({ Key? key, required this.data, this.selected = false, this.onTap}) : super(key: key);
+  Filter({Key? key, required this.data, this.selected = false, this.onTap})
+      : super(key: key);
   final data;
   final bool selected;
   final GestureTapCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 400),
         curve: Curves.fastOutSlowIn,
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.only(right: 10,bottom: 10),
-         height: 40,
+        padding: EdgeInsets.all(15),
+        margin: EdgeInsets.only(right: 10, bottom: 10),
+        constraints: BoxConstraints(minWidth: size.width * 0.1),
         decoration: BoxDecoration(
           color: selected ? primary : cardColor,
           borderRadius: BorderRadius.circular(40),
@@ -31,8 +33,12 @@ class Filter extends StatelessWidget {
             ),
           ],
         ),
-        child: Text(data["name"], maxLines: 1, textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 13, color: selected ? Colors.white : darker),
+        child: Text(
+          data["name"],
+          maxLines: 1,
+          textAlign: TextAlign.center,
+          style:
+              TextStyle(fontSize: 13, color: selected ? Colors.white : darker),
         ),
       ),
     );

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, no_leading_underscores_for_local_identifiers, unused_element, prefer_final_fields, unused_local_variable, prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_const_constructors, no_leading_underscores_for_local_identifiers, unused_element, prefer_final_fields, unused_local_variable, prefer_typing_uninitialized_variables, avoid_print
 
 import 'package:flutter/material.dart';
 import 'dart:async';

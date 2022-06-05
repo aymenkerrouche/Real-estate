@@ -180,9 +180,6 @@ class _AddLogementState extends State<AddLogement> {
               child: Textfield(
                 'Location',
                 child: TextFormField(
-                    onChanged: (value) {
-                      location = value as LatLng;
-                    },
                     decoration: InputDecoration(
                       hintText: 'Constantine, Algeria',
                       border: InputBorder.none,
@@ -443,7 +440,6 @@ class _AddLogementState extends State<AddLogement> {
     if (Tgl.vacation == true) {
       trad_type.add(' Vacation');
     }
-
     var data = new Map<dynamic, dynamic>();
     data['name'] = name;
     data["description"] = description;
@@ -459,28 +455,20 @@ class _AddLogementState extends State<AddLogement> {
     data['latitude'] = location.latitude;
     data['longitude'] = location.longitude;
     data['location'] = MapScreen.adrs;
-    trad_type.clear();
+
     var response = await Api().postData(data, '/offer');
     if (response.statusCode == 200) {
       ApiResponse offer_id = await getOfferID();
       if (offer_id.error == null) {
-        offerImage(Images.listPath, offer_id.data);
+        postOfferImage(Images.listPath, offer_id.data);
         showMsg('Offer Created Successfully');
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) {
-              return RootApp(
-                usertype: 0,
-              );
-            },
-          ),
-          (roote) => false,
-        );
+        Navigator.pushAndRemoveUntil( context,MaterialPageRoute(builder: (BuildContext context) {return RootApp(usertype: 0,);}, ),(roote) => false,);
       }
       MapScreen.adrs = null;
       data.clear();
-    } else {
+      trad_type.clear();
+    } 
+    else {
       MapScreen.adrs = null;
       showMsg('Error ${response.statusCode}');
       print(response.statusCode);

@@ -35,7 +35,7 @@ Future<ApiResponse> getOffers() async {
   return apiResponse;
 }
 
-// get all Offers
+// get Popular Offers
 Future<ApiResponse> getPopular() async {
   ApiResponse apiResponse = ApiResponse();
   try {
@@ -117,7 +117,6 @@ Future<ApiResponse> createPost(String body, String? image) async {
         apiResponse.error = unauthorized;
         break;
       default:
-        print(response.body);
         apiResponse.error = somethingWentWrong;
         break;
     }
@@ -232,6 +231,7 @@ Future<ApiResponse> deleteOfferPhotos(int Id) async {
   return apiResponse;
 }
 
+
 // Like or unlike offer
 Future<ApiResponse> likeUnlikeOffer(int offerId) async {
   ApiResponse apiResponse = ApiResponse();
@@ -246,14 +246,12 @@ Future<ApiResponse> likeUnlikeOffer(int offerId) async {
     switch (response.statusCode) {
       case 200:
         apiResponse.data = jsonDecode(response.body)['message'];
-        print(apiResponse.data.toString());
         break;
       case 401:
         apiResponse.error = unauthorized;
         break;
       default:
         apiResponse.error = somethingWentWrong;
-        print('oooooooo');
         break;
     }
   } catch (e) {
@@ -316,8 +314,8 @@ Future<ApiResponse> getFavorites() async {
   return apiResponse;
 }
 
-//upload Offer images
-offerImage(List images, offer_id) async {
+//Offer images
+postOfferImage(List images, offer_id) async {
   var fullUrl = '$url/photo';
   String token = await getToken();
   Map<String, String> headers = {
@@ -329,7 +327,6 @@ offerImage(List images, offer_id) async {
     ..headers.addAll(headers)
     ..fields['offer_id'] = offer_id.toString();
   for (int i = 0; i < images.length; i++) {
-    print('hh   ${images[i]}');
     request.files.add(await http.MultipartFile.fromPath('$i', images[i]));
   }
   Images.listImage.clear();
@@ -453,7 +450,7 @@ Future<ApiResponse> getOffersByData(data) async {
 
   String token = await getToken();
 
-  final response = await http.get(Uri.parse('$url/offer/search/$data'),
+  final response = await http.get(Uri.parse('$url/search/$data'),
       headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token'

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:memoire/Services/Api.dart';
 import 'package:memoire/Services/offerController.dart';
-import 'package:memoire/Services/userController.dart';
 import 'package:memoire/models/offer.dart';
 import 'package:memoire/screens/Client/Details.dart';
 import 'package:memoire/theme/color.dart';
@@ -26,17 +25,17 @@ class _SearchWilayaState extends State<SearchWilaya> {
   bool _loading = true;
   late Offer offer;
   List offers = [];
+  bool ifEmpty = false;
+  var search;
 
-  Future viewOffers() async {
+  Future viewOffers(data) async {
     offers.clear();
     lll.clear();
-    userId = await getUserId();
-
-    ApiResponse response = await getOffersByData(widget.data);
-
+    ApiResponse response = await getOffersByData(data);
     if (response.error == null) {
       setState(() {
         lll = response.data as List<dynamic>;
+        print(lll);
         _loading = _loading ? !_loading : _loading;
       });
     }
@@ -45,47 +44,70 @@ class _SearchWilayaState extends State<SearchWilaya> {
       offer = Offer.fromJson(element);
       offers.add(offer);
     });
+    offers.isEmpty ? ifEmpty = true : ifEmpty = false;
   }
 
   @override
   void initState() {
-    viewOffers();
+    viewOffers(widget.data);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return RefreshIndicator(
       onRefresh: () {
-        return viewOffers();
+        return viewOffers(widget.data);
       },
-      child: Scaffold(
-          backgroundColor: background,
-          body: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: appBarColor,
-                  pinned: false,
-                  floating: true,
-                  snap: true,
-                  flexibleSpace: FlexibleSpaceBar(
-                    background: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: getAppBar(),
+      child: GestureDetector(
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: Scaffold(
+            backgroundColor: background,
+            body: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                    automaticallyImplyLeading: false,
+                    backgroundColor: appBarColor,
+                    pinned: false,
+                    floating: true,
+                    snap: true,
+                    flexibleSpace: FlexibleSpaceBar(
+                      background: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 10),
+                          child: getAppBar(),
+                        ),
                       ),
-                    ),
-                  )),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) => buildBody(),
-                  childCount: 1,
-                ),
-              )
-            ],
-          )),
+                    )),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) => ifEmpty
+                        ? Container(
+                            margin: EdgeInsets.only(top: size.height * 0.1),
+                            width: size.width,
+                            alignment: Alignment.center,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Image.asset("assets/404.png"),
+                                Text(
+                                  "There are no offers",
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ],
+                            ),
+                          )
+                        : buildBody(),
+                    childCount: 1,
+                  ),
+                )
+              ],
+            )),
+      ),
     );
   }
 
@@ -106,6 +128,12 @@ class _SearchWilayaState extends State<SearchWilaya> {
         Expanded(
             child: CustomTextBox(
           hint: "Search",
+          onChanged: (value) {
+            search = value;
+          },
+          onEditingComplete: () {
+            viewOffers(search);
+          },
           prefix: SvgPicture.asset(
             'assets/icons/search.svg',
             color: inActiveColor,
@@ -185,7 +213,7 @@ class _SearchWilayaState extends State<SearchWilaya> {
   // Offer like dislik
   void offerLikeDislike(int id) async {
     ApiResponse response = await likeUnlikeOffer(id);
-    viewOffers();
+    viewOffers(widget.data);
     if (response.error == null) {
     } else if (response.error == unauthorized) {
       print(unauthorized);
