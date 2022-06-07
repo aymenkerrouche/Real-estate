@@ -10,6 +10,7 @@ import 'package:memoire/Services/Api.dart';
 import 'package:memoire/Services/userController.dart';
 import 'package:memoire/models/user.dart';
 import 'package:memoire/screens/Admin/agency_offers.dart';
+import 'package:memoire/screens/Client/favorite.dart';
 import 'package:memoire/screens/Client/update_profil.dart';
 import 'package:memoire/screens/login/landing.dart';
 import 'package:memoire/theme/color.dart';
@@ -115,7 +116,6 @@ class _AccountAgState extends State<AccountAg> {
       padding: EdgeInsets.only(left: 15, right: 15, bottom: 10),
       child: Column(
         children: [
-
           //header
           Column(
             children: [
@@ -137,7 +137,7 @@ class _AccountAgState extends State<AccountAg> {
                                 bgColor: appBarColor,
                               )),
                   ),
-                  
+
                   //add photo
                   Positioned(
                     bottom: -13,
@@ -162,7 +162,7 @@ class _AccountAgState extends State<AccountAg> {
               SizedBox(
                 height: 10,
               ),
-              
+
               //name
               Text(
                 user!.name!,
@@ -225,7 +225,6 @@ class _AccountAgState extends State<AccountAg> {
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-
                   //profil options
                   SettingItem(
                     title: "Profile",
@@ -266,10 +265,17 @@ class _AccountAgState extends State<AccountAg> {
                     ),
                   ),
                   SettingItem(
-                    title: "Statistics",
-                    leadingIcon: "assets/icons/grow.svg",
+                    title: "Favorites",
+                    leadingIcon: "assets/icons/bookmark.svg",
                     bgIconColor: primary,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FavoritePage(),
+                        ),
+                      );
+                    },
                   ),
                 ]),
           ),
@@ -277,7 +283,7 @@ class _AccountAgState extends State<AccountAg> {
           SizedBox(
             height: 20,
           ),
-          
+
           //more profile options
           Container(
             padding: const EdgeInsets.only(left: 15, right: 15),
@@ -320,7 +326,7 @@ class _AccountAgState extends State<AccountAg> {
           SizedBox(
             height: 20,
           ),
-          
+
           //Log out
           loading == false
               ? Center(
