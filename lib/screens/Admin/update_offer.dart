@@ -499,29 +499,29 @@ class _UpdateOfferState extends State<UpdateOffer> {
     data['longitude'] = location.longitude;
     data['location'] = MapScreen.adrs;
     trad_type.clear();
-    var response = await updateData(data);
-    if (response.statusCode == 200) {
-      ApiResponse offer_id = await getOfferID();
-      if (offer_id.error == null) {
-        postOfferImage(Images.listPath, offer_id.data);
-        showMsg('Offer Created Successfully');
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) {
-              return RootApp(
-                usertype: 0,
-              );
-            },
-          ),
-          (roote) => false,
-        );
-      }
+    data.removeWhere((key, value) => value == 0 || value == "");
+    print(data.toString());
+    var response = await editOffer(widget.id, data);
+    if (response.error == null) {
+      postOfferImage(Images.listPath, widget.id);
+      showMsg('Offer Created Successfully');
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) {
+            return RootApp(
+              usertype: 0,
+            );
+          },
+        ),
+        (roote) => false,
+      );
+
       MapScreen.adrs = null;
       data.clear();
     } else {
       MapScreen.adrs = null;
-      showMsg('Error ${response.statusCode}');
+      showMsg('Error ${response.error}');
       trad_type.clear();
       data.clear();
       Navigator.pushAndRemoveUntil(

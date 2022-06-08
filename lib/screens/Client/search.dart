@@ -186,12 +186,7 @@ class _SearchPageState extends State<SearchPage> {
         IconBox(
           radius: 10,
           pad: 7,
-          onTap: () => showModalBottomSheet(
-            context: context,
-            builder: (context) => Container(
-              color: red,
-            ),
-          ),
+          onTap: (){},
           child: SvgPicture.asset(
             'assets/icons/filter.svg',
             color: primary,

@@ -127,16 +127,16 @@ Future<ApiResponse> createPost(String body, String? image) async {
 }
 
 // Edit offer
-Future<ApiResponse> editOffer(int id, String body) async {
+Future<ApiResponse> editOffer(id, data) async {
   ApiResponse apiResponse = ApiResponse();
   try {
     String token = await getToken();
-    final response = await http.patch(Uri.parse('$url/user/$id'), headers: {
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token'
-    }, body: {
-      'body': body
-    });
+    final response = await http.patch(Uri.parse('$url/offer/$id'),
+        body: jsonEncode(data),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token'
+        });
 
     switch (response.statusCode) {
       case 200:
@@ -161,7 +161,7 @@ Future<ApiResponse> editOffer(int id, String body) async {
 updateData(data) async {
   String token = await getToken();
   return await http
-      .post(Uri.parse('$url/offer'), body: jsonEncode(data), headers: {
+      .patch(Uri.parse('$url/offer'), body: jsonEncode(data), headers: {
     'Content-type': 'application/json',
     'Accept': 'application/json',
     'Authorization': 'Bearer $token'
@@ -230,7 +230,6 @@ Future<ApiResponse> deleteOfferPhotos(int Id) async {
   }
   return apiResponse;
 }
-
 
 // Like or unlike offer
 Future<ApiResponse> likeUnlikeOffer(int offerId) async {
@@ -450,11 +449,10 @@ Future<ApiResponse> getOffersByData(data) async {
 
   String token = await getToken();
 
-  final response = await http.get(Uri.parse('$url/search/$data'),
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token'
-      });
+  final response = await http.get(Uri.parse('$url/search/$data'), headers: {
+    'Accept': 'application/json',
+    'Authorization': 'Bearer $token'
+  });
 
   switch (response.statusCode) {
     case 200:

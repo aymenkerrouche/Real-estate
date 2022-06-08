@@ -10,9 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'Api.dart';
 
-
-
-
 //Login
 Future<ApiResponse> login(String email, String password) async {
   ApiResponse apiResponse = ApiResponse();
@@ -44,7 +41,8 @@ Future<ApiResponse> login(String email, String password) async {
 }
 
 // Register
-Future<ApiResponse> register(String name, String email, String password, String u) async {
+Future<ApiResponse> register(
+    String name, String email, String password, String u) async {
   var data = Map<dynamic, dynamic>();
 
   data['name'] = name;
@@ -87,7 +85,8 @@ Future<bool> logout() async {
 }
 
 // Update user
-Future<ApiResponse> updateUser([String? name, String? email, String? password]) async {
+Future<ApiResponse> updateUser(
+    [String? name, String? email, String? password]) async {
   ApiResponse apiResponse = ApiResponse();
   try {
     String token = await getToken();
@@ -177,7 +176,6 @@ Future<ApiResponse> updateUser([String? name, String? email, String? password]) 
   }
   return apiResponse;
 }
-
 
 Future<ApiResponse> getUserDetail() async {
   ApiResponse apiResponse = ApiResponse();
@@ -271,6 +269,12 @@ registerImage(filepath, id, location, lat, long, phone) async {
     'Accept': 'application/json',
     'Authorization': 'Bearer $token'
   };
+  print(filepath);
+  print(id);
+  print(location);
+  print(lat);
+  print(long);
+  print(phone);
   var request = http.MultipartRequest('POST', Uri.parse(fullUrl))
     ..headers.addAll(headers)
     ..fields['location'] = location.toString()

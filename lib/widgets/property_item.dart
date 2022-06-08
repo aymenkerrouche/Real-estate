@@ -410,7 +410,7 @@ class _CommentsState extends State<Comments> {
                 ),
                 SizedBox(width: 6.0),
                 Text(
-                  "February 14, 2020",
+                   "${widget.data.date}",
                   style: TextStyle(
                     fontSize: 12,
                     color: darker,

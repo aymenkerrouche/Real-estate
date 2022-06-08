@@ -181,19 +181,19 @@ class _AddLogementState extends State<AddLogement> {
                 'Location',
                 child: TextFormField(
                     decoration: InputDecoration(
-                      hintText: 'Constantine, Algeria',
-                      border: InputBorder.none,
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          Icons.location_on,
-                          color: Colors.black,
-                        ),
-                        onPressed: () => showModalBottomSheet(
-                            enableDrag: false,
-                            context: context,
-                            builder: (context) => MapPage()),
-                      ),
-                    )),
+                  hintText: 'Constantine, Algeria',
+                  border: InputBorder.none,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      Icons.location_on,
+                      color: Colors.black,
+                    ),
+                    onPressed: () => showModalBottomSheet(
+                        enableDrag: false,
+                        context: context,
+                        builder: (context) => MapPage()),
+                  ),
+                )),
               ),
             ),
             SizedBox(
@@ -462,13 +462,22 @@ class _AddLogementState extends State<AddLogement> {
       if (offer_id.error == null) {
         postOfferImage(Images.listPath, offer_id.data);
         showMsg('Offer Created Successfully');
-        Navigator.pushAndRemoveUntil( context,MaterialPageRoute(builder: (BuildContext context) {return RootApp(usertype: 0,);}, ),(roote) => false,);
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+              return RootApp(
+                usertype: 0,
+              );
+            },
+          ),
+          (roote) => false,
+        );
       }
       MapScreen.adrs = null;
       data.clear();
       trad_type.clear();
-    } 
-    else {
+    } else {
       MapScreen.adrs = null;
       showMsg('Error ${response.statusCode}');
       print(response.statusCode);
@@ -491,6 +500,7 @@ class _AddLogementState extends State<AddLogement> {
   showMsg(msg) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(msg),
+      backgroundColor: green,
       action: SnackBarAction(
         label: 'Close',
         onPressed: () {

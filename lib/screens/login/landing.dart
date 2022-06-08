@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:memoire/Services/userController.dart';
 import 'package:memoire/screens/login/login.dart';
+import 'package:memoire/theme/color.dart';
 import 'sign_up.dart';
 
 class XDLanding extends StatelessWidget {
@@ -13,7 +14,7 @@ class XDLanding extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     double tol = size.height / 4;
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: primary,
       body: Stack(
         children: [
           Positioned(
@@ -70,8 +71,7 @@ class XDLanding extends StatelessWidget {
                     flex: 5,
                     child: Container(
                       width: size.width,
-                      child: Lottie.asset(
-                          'assets/log/74247-blue-house.json',
+                      child: Lottie.asset('assets/log/74247-blue-house.json',
                           fit: BoxFit.cover),
                     ),
                   ),

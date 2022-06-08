@@ -156,6 +156,7 @@ class _SignUpState extends State<SignUp> {
                       usertype = ToggleButton.togglevalue;
                       if (usertype == 1) {
                         _registerUser();
+                        ToggleButton.togglevalue = 0;
                       } else if (usertype == 0) {
                         profile["name"] = name;
                         profile["email"] = email;
