@@ -22,9 +22,7 @@ Details screens
 .
 
 ![CHEESE!](https://user-images.githubusercontent.com/92762767/172858942-cb352596-5612-421b-8712-f6f16eff76dd.jpg)
-
 ![CHEESE!](https://user-images.githubusercontent.com/92762767/172858963-f902de58-b124-481b-911e-6479c8024047.jpg)
-
 ![CHEESE!](https://user-images.githubusercontent.com/92762767/172858991-d096552e-7530-4c66-817d-8fb1609d125f.jpg)
 .
 
@@ -32,26 +30,24 @@ Create offer
 .
 
 ![CHEESE!](https://user-images.githubusercontent.com/92762767/172859396-6f3b0f7c-019c-40a0-85aa-d0552c2544f2.jpg)
-
 ![CHEESE!](https://user-images.githubusercontent.com/92762767/172859418-d84bff6b-e18b-456c-844d-4e2fc4a85955.jpg)
-
 ![CHEESE!](https://user-images.githubusercontent.com/92762767/172859450-4d0b8d65-2f44-4af2-b3dc-711b24a49d0e.jpg)
-
 ![CHEESE!](https://user-images.githubusercontent.com/92762767/172859477-ff0b9ff6-1995-4f9d-96e4-833d486a6931.jpg)
 .
 
 Favourite & your offers & edit offer
 .
+
 ![CHEESE!](https://user-images.githubusercontent.com/92762767/172860674-62fedb98-c6d1-4cc6-aa2d-2b0332ddbf11.jpg)
-
 ![CHEESE!](https://user-images.githubusercontent.com/92762767/172860686-4f1c8999-51cb-438c-bb78-89dfb77e0c31.jpg)
-
 .
 
 Profile 
 .
-![CHEESE!](https://user-images.githubusercontent.com/92762767/172861112-53be37e8-a61d-4e62-a48f-3e847fe50417.jpg)
 
 ![CHEESE!](https://user-images.githubusercontent.com/92762767/172861112-53be37e8-a61d-4e62-a48f-3e847fe50417.jpg)
+![CHEESE!](https://user-images.githubusercontent.com/92762767/172861422-6b60887f-1cc1-461e-8db0-a381b014fa0a.jpg)
+.
+.
 
 
