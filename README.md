@@ -1,6 +1,6 @@
-This is my final year project with Flutter & APi
+Real Estate ads App with Flutter & Laravel MySQL 
 
-Real Estate ads App
+
 .
 .
 
